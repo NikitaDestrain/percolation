@@ -1,5 +1,6 @@
 package com.percolation.domain;
 
+import com.percolation.domain.matrix.Matrix;
 import lombok.Data;
 
 @Data

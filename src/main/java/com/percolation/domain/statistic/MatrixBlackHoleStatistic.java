@@ -1,9 +1,11 @@
-package com.percolation.domain;
+package com.percolation.domain.statistic;
 
 import lombok.Data;
 
 @Data
 public class MatrixBlackHoleStatistic {
+    int matrixId;
+    boolean matrixContainsPercolation;
     double p;
     int blackCellCount;
     int[] blackCellCountInRows;
@@ -12,4 +14,5 @@ public class MatrixBlackHoleStatistic {
     double averageBlackCellCountInColumn;
     int zeroRowCount;
     int zeroColumnCount;
+    double concentrationRate;
 }

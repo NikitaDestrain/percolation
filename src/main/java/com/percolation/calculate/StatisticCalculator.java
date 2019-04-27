@@ -1,8 +1,8 @@
 package com.percolation.calculate;
 
-import com.percolation.domain.Cell;
-import com.percolation.domain.Matrix;
-import com.percolation.domain.MatrixBlackHoleStatistic;
+import com.percolation.domain.matrix.Cell;
+import com.percolation.domain.matrix.Matrix;
+import com.percolation.domain.statistic.MatrixBlackHoleStatistic;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +29,9 @@ public class StatisticCalculator {
 
         int N = matrix.getN();
         double p = matrix.getP();
-        int blackCellCount = 0;
+        int blackCellCount = matrix.getBlackCellCount();
+        int whiteCellCount = N * N - blackCellCount;
+        double concentrationRate = calculateConcentrationRate(blackCellCount, whiteCellCount);
         int[] blackCellCountInRows = new int[N];
         int[] blackCellCountInColumns = new int[N];
         double averageBlackCellCountInRow;
@@ -43,7 +45,6 @@ public class StatisticCalculator {
             for (int y = 0; y < N; y++) {
                 Cell cell = matrix.getCellValue(x, y);
                 if (cell.isValue()) {
-                    blackCellCount++;
                     blackCellCountInColumns[x] = blackCellCountInColumns[x] + 1;
                     blackCellCountInRows[y] = blackCellCountInRows[y] + 1;
                     isZeroColumn = false;
@@ -60,7 +61,6 @@ public class StatisticCalculator {
             for (int x = 0; x < N; x++) {
                 Cell cell = matrix.getCellValue(x, y);
                 if (cell.isValue()) {
-                    blackCellCount++;
                     blackCellCountInColumns[x] = blackCellCountInColumns[x]++;
                     blackCellCountInRows[y] = blackCellCountInRows[y]++;
                     isZeroRow = false;
@@ -80,6 +80,8 @@ public class StatisticCalculator {
         averageBlackCellCountInRow = (double) acc1 / (double) N;
         averageBlackCellCountInColumn = (double) acc2 / (double) N;
 
+        mBHS.setMatrixId(matrix.getId());
+        mBHS.setMatrixContainsPercolation(matrix.isContainPercolation());
         mBHS.setP(p);
         mBHS.setBlackCellCount(blackCellCount);
         mBHS.setBlackCellCountInRows(blackCellCountInRows);
@@ -88,6 +90,7 @@ public class StatisticCalculator {
         mBHS.setAverageBlackCellCountInColumn(averageBlackCellCountInColumn);
         mBHS.setZeroRowCount(zeroRowCount);
         mBHS.setZeroColumnCount(zeroColumnCount);
+        mBHS.setConcentrationRate(concentrationRate);
 
         return mBHS;
     }

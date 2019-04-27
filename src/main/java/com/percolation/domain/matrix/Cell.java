@@ -1,4 +1,4 @@
-package com.percolation.domain;
+package com.percolation.domain.matrix;
 
 import lombok.Data;
 
@@ -9,5 +9,9 @@ public class Cell {
 
     public int getHumanReadableValue() {
         return value ? 1 : 0;
+    }
+
+    public int getClusterId() {
+        return cluster == null ? 0 : cluster.getId();
     }
 }

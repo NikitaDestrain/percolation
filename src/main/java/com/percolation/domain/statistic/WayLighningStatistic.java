@@ -1,5 +1,6 @@
-package com.percolation.domain;
+package com.percolation.domain.statistic;
 
+import com.percolation.domain.Way;
 import lombok.Data;
 
 @Data

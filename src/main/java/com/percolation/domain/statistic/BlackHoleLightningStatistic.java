@@ -1,4 +1,4 @@
-package com.percolation.domain;
+package com.percolation.domain.statistic;
 
 import lombok.Data;
 

@@ -1,17 +1,14 @@
 package com.percolation;
 
-import com.percolation.domain.Matrix;
-import com.percolation.generator.UniformDistributionGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import com.percolation.domain.matrix.Matrix;
+import com.percolation.generator.UniformDistributionMatrixGenerator;
 
 public class Main {
 
-    private static UniformDistributionGenerator udg = UniformDistributionGenerator.getInstance();
+    private static UniformDistributionMatrixGenerator udg = new UniformDistributionMatrixGenerator();
 
     public static void main(String[] args) {
+        /*
         Scanner scanner = new Scanner(System.in);
 
         // required parameters
@@ -67,14 +64,14 @@ public class Main {
                 Matrix matrix = generateStep(N, P, i);
                 matrices.add(matrix);
             }
-        }
+        }*/
 
     }
-
+    /*
     private static Matrix generateStep(int N, double P, int i) {
         Matrix matrix = udg.generateRandomMatrix(N, P);
         System.out.println(matrix.getHumanReadableMatrix());
         System.out.println("**************************************************************************");
         return matrix;
-    }
+    }*/
 }

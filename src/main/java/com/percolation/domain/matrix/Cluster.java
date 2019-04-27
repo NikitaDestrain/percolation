@@ -1,9 +1,9 @@
-package com.percolation.domain;
+package com.percolation.domain.matrix;
 
 import lombok.Data;
 
 @Data
 public class Cluster {
-    private String color;
+    private int id;
     private int size;
 }
