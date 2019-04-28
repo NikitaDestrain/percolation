@@ -2,6 +2,9 @@ package com.percolation;
 
 import com.percolation.domain.matrix.Matrix;
 import com.percolation.domain.matrix.MatrixGeneratorType;
+import com.percolation.io.IOUtils;
+
+import java.util.List;
 
 public class ClusterTester {
 
@@ -25,6 +28,7 @@ public class ClusterTester {
     };
 
     public static void main(String[] args) {
+/*
         int size = TEST_MATRIX2.length;
         Matrix matrix = new Matrix(0, size, 0.0, MatrixGeneratorType.TEST);
         for (int y = 0; y < size; y++) {
@@ -34,7 +38,11 @@ public class ClusterTester {
             }
             System.out.println();
         }
-
         System.out.println(matrix.getHumanReadableMatrixWithClusters());
+*/
+        List<Matrix> testMatrices = IOUtils.getInstance().readTestMatrices();
+        for (Matrix m : testMatrices) {
+            System.out.println(m.getHumanReadableMatrixWithClusters());
+        }
     }
 }
