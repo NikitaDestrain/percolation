@@ -127,6 +127,8 @@ public class StatisticCalculator {
         result.setAverageAmountClusters(avgAmountClusters);
         result.setAverageSizeCluster(avgSizeCluster);
 
+
+        
         return result;
     }
 }
