@@ -126,8 +126,6 @@ public class StatisticCalculator {
         ClusterStatistic result = new ClusterStatistic();
         result.setAverageAmountClusters(avgAmountClusters);
         result.setAverageSizeCluster(avgSizeCluster);
-
-
         
         return result;
     }
