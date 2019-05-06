@@ -74,7 +74,7 @@ public class MatrixService {
         return matrix;
     }
 
-    public List<Matrix> createMatrices(int count, int N, int p, MatrixGeneratorType generatorType) {
+    public List<Matrix> createMatrices(int count, int N, double p, MatrixGeneratorType generatorType) {
         List<Matrix> result = null;
         switch (generatorType) {
             case UNIFORM:

@@ -112,7 +112,7 @@ public class StatisticCalculator {
 
         int matricesCount = matrices.size();
         for (Matrix matrix : matrices) {
-            Set<Cluster> clusters = matrix.getClusters();
+            List<Cluster> clusters = matrix.getClusters();
 
             overallClusterCnt += clusters.size();
             for (Cluster cluster : clusters) {
