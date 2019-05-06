@@ -3,6 +3,7 @@ package com.percolation.service;
 import com.percolation.calculate.StatisticCalculator;
 import com.percolation.domain.matrix.Matrix;
 import com.percolation.domain.matrix.MatrixGeneratorType;
+import com.percolation.domain.statistic.ClusterStatistic;
 import com.percolation.domain.statistic.MatrixBlackHoleStatistic;
 import com.percolation.generator.GradientMatrixGenerator;
 import com.percolation.generator.MostovoyGradientMatrixGenerator;
@@ -22,6 +23,10 @@ public class MatrixService {
     private UniformDistributionMatrixGenerator uniformDistributionMatrixGenerator;
     private StatisticCalculator statisticCalculator;
 
+    // containers
+    private List<Matrix> currentMatrices;
+    private List<MatrixBlackHoleStatistic> currentMatrixBlackHoleStatics;
+
     private static MatrixService instance;
 
     private MatrixService() {
@@ -39,7 +44,9 @@ public class MatrixService {
     }
 
     public List<Matrix> createTestMatrices() {
-        return ioUtils.readTestMatrices();
+        List<Matrix> matrices = ioUtils.readTestMatrices();
+        setCurrentMatrices(matrices);
+        return matrices;
     }
 
     public Matrix createMatrix(int id, int N, int p, MatrixGeneratorType generatorType) {
@@ -91,6 +98,7 @@ public class MatrixService {
                 result = uniformDistributionMatrixGenerator.generateRandomMatrices(count, N, p);
                 break;
         }
+        setCurrentMatrices(result);
         return result;
     }
 
@@ -108,6 +116,31 @@ public class MatrixService {
             ioUtils.writeMatrixStatisticsToCSV(generatorName, matrixBlackHoleStatistics, size);
         }
 
+        setCurrentMatrixBlackHoleStatics(matrixBlackHoleStatistics);
         return matrixBlackHoleStatistics;
+    }
+
+    public String writeMatrixStatisticToFile(String generatorName, List<MatrixBlackHoleStatistic> list, int matrixSize) {
+        return ioUtils.writeMatrixStatisticsToCSV(generatorName, list, matrixSize);
+    }
+
+    public List<Matrix> getCurrentMatrices() {
+        return currentMatrices;
+    }
+
+    private void setCurrentMatrices(List<Matrix> currentMatrices) {
+        this.currentMatrices = currentMatrices;
+    }
+
+    public List<MatrixBlackHoleStatistic> getCurrentMatrixBlackHoleStatics() {
+        return currentMatrixBlackHoleStatics;
+    }
+
+    private void setCurrentMatrixBlackHoleStatics(List<MatrixBlackHoleStatistic> currentMatrixBlackHoleStatics) {
+        this.currentMatrixBlackHoleStatics = currentMatrixBlackHoleStatics;
+    }
+
+    public ClusterStatistic getClusterStatistic(List<Matrix> matrices) {
+        return statisticCalculator.calculateClusterStatistic(matrices);
     }
 }

@@ -115,7 +115,7 @@ public class IOUtils {
     }
 
     @SuppressWarnings("Duplicates")
-    public void writeMatrixStatisticsToCSV(String generatorName, List<MatrixBlackHoleStatistic> list, int matrixSize) {
+    public String writeMatrixStatisticsToCSV(String generatorName, List<MatrixBlackHoleStatistic> list, int matrixSize) {
         String fileName = generatorName + "_" + list.size() + "size" + matrixSize + "x" + matrixSize + ".csv";
         try (FileWriter fileWriter = new FileWriter(OUT_FOLDER + fileName)) {
             fileWriter.append(CSV_MATRIX_STATISTICS_HEADER);
@@ -144,6 +144,7 @@ public class IOUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return OUT_FOLDER + fileName;
     }
 
     @SuppressWarnings("Duplicates")

@@ -1,6 +1,7 @@
 package com.percolation;
 
 import com.percolation.domain.matrix.Matrix;
+import com.percolation.domain.statistic.ClusterStatistic;
 import com.percolation.domain.statistic.MatrixBlackHoleStatistic;
 import com.percolation.service.MatrixService;
 
@@ -19,5 +20,9 @@ public class ControllerTester {
         }
 
         System.out.println("****************************************************************************");
+        System.out.println("Cluster statistic:");
+        ClusterStatistic cs =  ms.getClusterStatistic(ms.getCurrentMatrices());
+        System.out.println("AverageAmountClusters: " + cs.getAverageAmountClusters());
+        System.out.println("AverageSizeCluster: " + cs.getAverageSizeCluster());
     }
 }

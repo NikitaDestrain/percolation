@@ -33,6 +33,7 @@ public class ClusterDetection {
 
         // compute new cluster size
         sharedCluster.setSize(sharedCluster.getSize() + absorbedCluster.getSize());
+        matrix.removeCluster(absorbedCluster);
     }
 
     public Cluster calculateCluster(Matrix matrix, int x, int y) {
@@ -63,6 +64,7 @@ public class ClusterDetection {
             // case: neighbours do not have cluster
             if ((neighbourLeftCluster == null) && (neighbourUpperCluster == null)) {
                 result = new Cluster();
+                matrix.addCluster(result);
                 k++;
                 result.setId(k);
                 result.setSize(1);
@@ -81,7 +83,6 @@ public class ClusterDetection {
             }
 
             // case: both have cluster
-            // case: left neighbour has cluster
             if ((neighbourLeftCluster != null) && (neighbourUpperCluster != null)) {
                 if (neighbourLeftCluster != neighbourUpperCluster) {
                     mergeClusters(matrix, neighbourUpperCluster, neighbourLeftCluster);
@@ -97,6 +98,4 @@ public class ClusterDetection {
     public void refreshClusterCounter() {
         this.k = 0;
     }
-
-
 }

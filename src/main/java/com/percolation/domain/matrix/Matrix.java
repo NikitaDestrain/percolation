@@ -3,6 +3,10 @@ package com.percolation.domain.matrix;
 import com.percolation.detection.ClusterDetection;
 import lombok.Data;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 public class Matrix {
     // NxN = size
@@ -13,6 +17,7 @@ public class Matrix {
     private double p;
     private Cell[][] values;
     private MatrixGeneratorType generatorType;
+    private Set<Cluster> clusters;
 
     public Matrix(int id, int N, double p, MatrixGeneratorType generatorType) {
         this.id = id;
@@ -22,6 +27,7 @@ public class Matrix {
         this.blackCellCount = 0;
         this.containPercolation = false;
         this.values = new Cell[N][N];
+        this.clusters = new HashSet<>();
     }
 
     public void setCellValue(int x, int y, boolean value) {
@@ -84,5 +90,17 @@ public class Matrix {
             sb.append("\n");
         }
         return sb.toString();
+    }
+
+    public void addCluster(Cluster cluster) {
+        clusters.add(cluster);
+    }
+
+    public Set<Cluster> getAllClusters() {
+        return Collections.unmodifiableSet(clusters);
+    }
+
+    public void removeCluster(Cluster cluster) {
+        clusters.remove(cluster);
     }
 }

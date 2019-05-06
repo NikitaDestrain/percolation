@@ -1,12 +1,15 @@
 package com.percolation.calculate;
 
 import com.percolation.domain.matrix.Cell;
+import com.percolation.domain.matrix.Cluster;
 import com.percolation.domain.matrix.Matrix;
+import com.percolation.domain.statistic.ClusterStatistic;
 import com.percolation.domain.statistic.MatrixBlackHoleStatistic;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public class StatisticCalculator {
 
@@ -101,5 +104,29 @@ public class StatisticCalculator {
             statistics.add(calculateMatrixBlackHoleStatistic(m));
         }
         return Collections.unmodifiableList(statistics);
+    }
+
+    public ClusterStatistic calculateClusterStatistic(List<Matrix> matrices) {
+        int overallClusterCnt = 0;
+        int overallClusterSize = 0;
+
+        int matricesCount = matrices.size();
+        for (Matrix matrix : matrices) {
+            Set<Cluster> clusters = matrix.getClusters();
+
+            overallClusterCnt += clusters.size();
+            for (Cluster cluster : clusters) {
+                overallClusterSize += cluster.getSize();
+            }
+        }
+
+        double avgAmountClusters = (double) overallClusterCnt / (double) matricesCount;
+        double avgSizeCluster = (double) overallClusterSize / ((double) matricesCount * (double) overallClusterCnt);
+
+        ClusterStatistic result = new ClusterStatistic();
+        result.setAverageAmountClusters(avgAmountClusters);
+        result.setAverageSizeCluster(avgSizeCluster);
+
+        return result;
     }
 }
