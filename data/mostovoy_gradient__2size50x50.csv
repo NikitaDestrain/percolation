@@ -1,3 +1,0 @@
-id,p,percolation,blackCount,concentrationRate,averageBlackCellInRow,averageBlackCellInColumn,zeroRowCount,zeroColumnCount
-0,1.0,false,1084,0.41676278354479046,21.254901960784313,21.254901960784313,17,0
-1,-1.0,true,1084,0.41676278354479046,21.254901960784313,21.254901960784313,0,17
