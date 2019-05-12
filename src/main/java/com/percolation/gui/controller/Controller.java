@@ -1,5 +1,7 @@
 package com.percolation.gui.controller;
 
+import com.percolation.domain.Way;
+import com.percolation.domain.matrix.Cell;
 import com.percolation.domain.matrix.Matrix;
 import com.percolation.domain.matrix.MatrixGeneratorType;
 import com.percolation.generator.UniformDistributionMatrixGenerator;
@@ -67,6 +69,10 @@ public class Controller {
     Button MGradB = new Button();
     Button UniDB = new Button();
     ImageView imageView = new ImageView();
+    WritableImage image;
+    PixelWriter pixelWriter;
+    int x1, y1;
+    Way put = null;
 
 
     @FXML
@@ -88,6 +94,7 @@ public class Controller {
     public Label size;
     public Label blkpnt;
     public Label Pvalue;
+    public Button way;
 
 
     @FXML
@@ -146,18 +153,19 @@ public class Controller {
                     }
                     UniDM = Matr;
                 }
+                if (UniM != null || GradM != null || MGradM != null || UniDM != null)
+                    data.setDisable(false);
             }
         });
-
     }
 
     private Image createColorScaleImage(Matrix matr, int width, int height, int mnozh) {
-        WritableImage image = new WritableImage(width * mnozh, height * mnozh);
-        PixelWriter pixelWriter = image.getPixelWriter();
+        image = new WritableImage(width * mnozh, height * mnozh);
+        pixelWriter = image.getPixelWriter();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                int x1 = x * mnozh;
-                int y1 = y * mnozh;
+                x1 = x * mnozh;
+                y1 = y * mnozh;
                 for (int i = 0; i < mnozh; i++) {
                     for (int j = 0; j < mnozh; j++) {
                         if (matr.getCellValue(x, y).getHumanReadableValue() == 1) {
@@ -217,6 +225,30 @@ public class Controller {
     }
 
     @FXML
+    public void printWay(Matrix matr, int mnozh) throws CloneNotSupportedException {
+        put = MatrixService.getInstance().getShortestWayMatrix(matr);
+        System.out.println(put.getLengthWay());
+        int x, y;
+        for (Cell cell : put.getWayArray()) {
+            x = cell.getX();
+            y = cell.getY();
+            x1 = x * mnozh;
+            y1 = y * mnozh;
+            pixelWriter = image.getPixelWriter();
+            for (int i = 0; i < mnozh; i++) {
+                for (int j = 0; j < mnozh; j++) {
+                    if (matr.getCellValue(x, y).getHumanReadableValue() == 1) {
+                        double value = matr.getCellValue(x, y).getClusterId();
+                        pixelWriter.setColor(x1 + i, y1 + j, Color.PINK);
+                    } else pixelWriter.setColor(x1 + i, y1 + j, Color.RED);
+                    if (i == 0 || j == 0 || i == mnozh - 1 || j == mnozh - 1)
+                        pixelWriter.setColor(x1 + i, y1 + j, Color.BLACK);
+                }
+            }
+        }
+    }
+
+    @FXML
     public void initialize() {
         Image Play = new Image(getClass().getResource("/images/play.png").toExternalForm());
         Image Stop = new Image(getClass().getResource("/images/stop.png").toExternalForm());
@@ -232,18 +264,22 @@ public class Controller {
         size.setVisible(false);
         blkpnt.setVisible(false);
         Pvalue.setVisible(false);
+        way.setVisible(false);
+        data.setDisable(true);
         chess.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                scroll.setVisible(true);
-                Button M1 = new Button();
-                M1.setText("Матрица 1");
-                M1.prefWidth(190.0);
-                scroll.setContent(M1);
-                M1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                way.setVisible(true);
+                scroll.setVisible(false);
+                printMatrix(TestM.get(0));
+                way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        printMatrix(TestM.get(0));
+                        try {
+                            printWay(TestM.get(0), 11);
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
@@ -251,15 +287,17 @@ public class Controller {
         circles.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                scroll.setVisible(true);
-                Button M1 = new Button();
-                M1.setText("Матрица 1");
-                M1.prefWidth(190.0);
-                scroll.setContent(M1);
-                M1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                way.setVisible(true);
+                scroll.setVisible(false);
+                printMatrix(TestM.get(1));
+                way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        printMatrix(TestM.get(1));
+                        try {
+                            printWay(TestM.get(1), 11);
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
@@ -267,15 +305,17 @@ public class Controller {
         krest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                scroll.setVisible(true);
-                Button M1 = new Button();
-                M1.setText("Матрица 1");
-                M1.prefWidth(190.0);
-                scroll.setContent(M1);
-                M1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                way.setVisible(true);
+                scroll.setVisible(false);
+                printMatrix(TestM.get(2));
+                way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        printMatrix(TestM.get(2));
+                        try {
+                            printWay(TestM.get(2), 11);
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
@@ -283,15 +323,17 @@ public class Controller {
         horpol.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                scroll.setVisible(true);
-                Button M1 = new Button();
-                M1.setText("Матрица 1");
-                M1.prefWidth(190.0);
-                scroll.setContent(M1);
-                M1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                way.setVisible(true);
+                scroll.setVisible(false);
+                printMatrix(TestM.get(3));
+                way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        printMatrix(TestM.get(3));
+                        try {
+                            printWay(TestM.get(3), 11);
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
@@ -299,15 +341,17 @@ public class Controller {
         verpol.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                scroll.setVisible(true);
-                Button M1 = new Button();
-                M1.setText("Матрица 1");
-                M1.prefWidth(190.0);
-                scroll.setContent(M1);
-                M1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                way.setVisible(true);
+                scroll.setVisible(false);
+                printMatrix(TestM.get(4));
+                way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        printMatrix(TestM.get(4));
+                        try {
+                            printWay(TestM.get(4), 11);
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
@@ -315,15 +359,17 @@ public class Controller {
         rain.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                scroll.setVisible(true);
-                Button M1 = new Button();
-                M1.setText("Матрица 1");
-                M1.prefWidth(190.0);
-                scroll.setContent(M1);
-                M1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                way.setVisible(true);
+                scroll.setVisible(false);
+                printMatrix(TestM.get(5));
+                way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        printMatrix(TestM.get(5));
+                        try {
+                            printWay(TestM.get(5), 11);
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
@@ -331,15 +377,17 @@ public class Controller {
         htest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                scroll.setVisible(true);
-                Button M1 = new Button();
-                M1.setText("Матрица 1");
-                M1.prefWidth(190.0);
-                scroll.setContent(M1);
-                M1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                way.setVisible(true);
+                scroll.setVisible(false);
+                printMatrix(TestM.get(6));
+                way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        printMatrix(TestM.get(6));
+                        try {
+                            printWay(TestM.get(6), 11);
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
@@ -351,7 +399,7 @@ public class Controller {
                 GridPane root1 = new GridPane();
                 Button[] matrix = new Button[UniM.size()];
                 for (int i = 0; i < UniM.size(); i++) {
-                    matrix[i] = new Button(/*"Matrix" +  i*/);
+                    matrix[i] = new Button();
                     matrix[i].setText("Матрица " + (i + 1));
                     matrix[i].setPrefWidth(185);
                     root1.setRowIndex(matrix[i], i);
@@ -361,7 +409,18 @@ public class Controller {
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
+                            way.setVisible(true);
                             printMatrix(UniM.get(finalI));
+                            way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    try {
+                                        printWay(UniM.get(finalI), 11);
+                                    } catch (CloneNotSupportedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         }
                     });
                 }
@@ -385,7 +444,18 @@ public class Controller {
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
+                            way.setVisible(true);
                             printMatrix(GradM.get(finalI));
+                            way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    try {
+                                        printWay(GradM.get(finalI), 11);
+                                    } catch (CloneNotSupportedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         }
                     });
                 }
@@ -409,7 +479,18 @@ public class Controller {
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
+                            way.setVisible(true);
                             printMatrix(MGradM.get(finalI));
+                            way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    try {
+                                        printWay(MGradM.get(finalI), 11);
+                                    } catch (CloneNotSupportedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         }
                     });
                 }
@@ -434,6 +515,17 @@ public class Controller {
                         @Override
                         public void handle(MouseEvent event) {
                             printMatrix(UniDM.get(finalI));
+                            way.setVisible(true);
+                            way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    try {
+                                        printWay(UniDM.get(finalI), 11);
+                                    } catch (CloneNotSupportedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         }
                     });
                 }
@@ -460,6 +552,8 @@ public class Controller {
                 primaryStage.getChildren().remove(GradB);
                 primaryStage.getChildren().remove(MGradB);
                 primaryStage.getChildren().remove(UniDB);
+                data.setDisable(true);
+                way.setVisible(false);
             }
         });
     }

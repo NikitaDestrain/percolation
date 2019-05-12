@@ -11,8 +11,8 @@
       <TextField fx:id="MatN" layoutX="245.0" layoutY="27.0" />
       <Label layoutX="25.0" layoutY="32.0" text="Размер матрицы(NxN) N:" />
       <Label layoutX="25.0" layoutY="87.0" text="Тип заполнения:" />
-      <Button fx:id="OK" layoutX="268.0" layoutY="255.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="89.0" text="ОК" />
-      <Button fx:id="sbros" layoutX="82.0" layoutY="255.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="89.0" text="Сброс" />
+      <Button fx:id="OK" layoutX="82.0" layoutY="255.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="89.0" text="ОК" />
+      <Button fx:id="sbros" layoutX="268.0" layoutY="255.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="89.0" text="Сброс" />
       <ComboBox fx:id="Zapol" layoutX="245.0" layoutY="82.0" onAction="#AddVar" prefHeight="31.0" prefWidth="187.0" />
    </children>
 </AnchorPane>

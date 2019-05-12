@@ -129,9 +129,10 @@ public class MatrixService {
         return ioUtils.writeMatrixStatisticsToCSV(generatorName, list, matrixSize);
     }
 
-    public void getShortestWayMatrix(Matrix matrix) throws CloneNotSupportedException {
+    public Way getShortestWayMatrix(Matrix matrix) throws CloneNotSupportedException {
         dejkstraDetection.setMatrix(matrix);
         dejkstraDetection.setupDejkstra();
+        return dejkstraDetection.getShortestWay();
     }
 
     public String writeMatrixWayStatisticToFile(int matrixSize) {

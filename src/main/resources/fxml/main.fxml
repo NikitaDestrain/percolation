@@ -13,7 +13,7 @@
    <children>
       <Button fx:id="play" mnemonicParsing="false" onMouseClicked="#GenerateRun" text="PLAY" />
       <Button fx:id="stop" layoutX="154.0" mnemonicParsing="false" text="CLEAR" />
-      <Button fx:id="data" layoutX="317.0" onMouseClicked="#ImportFile" mnemonicParsing="false" text="DATA" />
+      <Button fx:id="data" layoutX="317.0" mnemonicParsing="false" onMouseClicked="#ImportFile" text="DATA" />
       <Button fx:id="chess" layoutY="192.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Шахматы" />
       <Button fx:id="circles" layoutY="222.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Круги" />
       <Button fx:id="krest" layoutY="253.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Мальтийский крест" />
@@ -34,5 +34,6 @@
       <Label fx:id="size" layoutX="499.0" layoutY="171.0" text="Размер:" />
       <Label fx:id="blkpnt" layoutX="600.0" layoutY="171.0" text="Количество &quot;черных&quot; точек: " />
       <Label fx:id="Pvalue" layoutX="831.0" layoutY="171.0" text="Вероятность:" />
+      <Button fx:id="way" layoutX="380.0" layoutY="140.0" mnemonicParsing="false" text="Проложить путь" />
    </children>
 </AnchorPane>
