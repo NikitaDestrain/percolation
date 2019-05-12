@@ -18,7 +18,9 @@ public class Way implements Cloneable {
 
     private int redCell;
 
-    private int sizeHole;
+    private double sizeHole;
+
+    private double widthWay;
 
     public void init() {
         wayArray = new ArrayList<>();
