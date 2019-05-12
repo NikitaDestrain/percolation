@@ -1,22 +1,37 @@
 package com.percolation.domain;
 
+import com.percolation.domain.matrix.Cell;
 import com.percolation.domain.matrix.Matrix;
 import lombok.Data;
 
+import java.util.ArrayList;
+
 @Data
-public class Way {
+public class Way implements Cloneable {
     private static final int AMOUNT_COLUMN = 2;
 
     private Matrix matrix;
 
-    private int[][] wayArray;
+    private ArrayList<Cell> wayArray;
 
-    public void init(int n) {
-        wayArray = new int[n][AMOUNT_COLUMN];
+    private int lengthWay;
+
+    private int redCell;
+
+    private int sizeHole;
+
+    public void init() {
+        wayArray = new ArrayList<>();
+        redCell = 0;
     }
 
-    public void setValue(int n, int x, int y) {
-        this.wayArray[n][AMOUNT_COLUMN - 2] = x;
-        this.wayArray[n][AMOUNT_COLUMN - 1] = y;
+    public void addCell(Cell cell) {
+        this.wayArray.add(cell);
+
+    }
+
+    @Override
+    public Way clone() throws CloneNotSupportedException {
+        return (Way)super.clone();
     }
 }

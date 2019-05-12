@@ -1,13 +1,31 @@
 package com.percolation;
 
+import com.percolation.detection.DejkstraDetection;
+import com.percolation.domain.matrix.Cluster;
 import com.percolation.domain.matrix.Matrix;
+import com.percolation.domain.matrix.MatrixGeneratorType;
 import com.percolation.generator.UniformDistributionMatrixGenerator;
+import com.percolation.service.MatrixService;
+
+import java.io.IOException;
+import java.util.List;
 
 public class Main {
 
     private static UniformDistributionMatrixGenerator udg = new UniformDistributionMatrixGenerator();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
+//        MatrixService matrixService = MatrixService.getInstance();
+//      //  Matrix matrix = matrixService.createTestMatrices().get(4);
+//        List<Matrix> matrix = matrixService.createMatrices(1,100,0.25,MatrixGeneratorType.UNIFORM);
+//        DejkstraDetection dejkstraDetection = DejkstraDetection.getInstance();
+//        for(int i =0; i < matrix.size();i++){
+//            System.out.println(i);
+//            dejkstraDetection.setMatrix(matrix.get(i));
+//            dejkstraDetection.setupDejkstra();
+//        }
+
+
         /*
         Scanner scanner = new Scanner(System.in);
 

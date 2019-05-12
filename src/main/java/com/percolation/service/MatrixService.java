@@ -1,6 +1,8 @@
 package com.percolation.service;
 
 import com.percolation.calculate.StatisticCalculator;
+import com.percolation.detection.DejkstraDetection;
+import com.percolation.domain.Way;
 import com.percolation.domain.matrix.Matrix;
 import com.percolation.domain.matrix.MatrixGeneratorType;
 import com.percolation.domain.statistic.ClusterStatistic;
@@ -49,7 +51,7 @@ public class MatrixService {
         return matrices;
     }
 
-    public Matrix createMatrix(int id, int N, int p, MatrixGeneratorType generatorType) {
+    public Matrix createMatrix(int id, int N, double p, MatrixGeneratorType generatorType) {
         Matrix matrix = null;
         switch (generatorType) {
             case UNIFORM:
@@ -102,6 +104,7 @@ public class MatrixService {
         return result;
     }
 
+
     public MatrixBlackHoleStatistic calculateMatrixBlackHoleStatistic(Matrix matrix) {
         return statisticCalculator.calculateMatrixBlackHoleStatistic(matrix);
     }
@@ -122,6 +125,16 @@ public class MatrixService {
 
     public String writeMatrixStatisticToFile(String generatorName, List<MatrixBlackHoleStatistic> list, int matrixSize) {
         return ioUtils.writeMatrixStatisticsToCSV(generatorName, list, matrixSize);
+    }
+
+    public String writeMatrixWayStatisticToFile(String generatorName, List<Matrix> matrices, int matrixSize) throws CloneNotSupportedException {
+        DejkstraDetection dejkstraDetection = DejkstraDetection.getInstance();
+        for (Matrix matrix : matrices
+        ) {
+            dejkstraDetection.setMatrix(matrix);
+            dejkstraDetection.setupDejkstra();
+        }
+        return ioUtils.writeMatrixWayStatisticsToCSV(dejkstraDetection.getWayStatistics(), matrixSize);
     }
 
     public List<Matrix> getCurrentMatrices() {

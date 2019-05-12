@@ -1,11 +1,13 @@
 package com.percolation.io;
 
 import com.percolation.detection.ClusterDetection;
+import com.percolation.domain.Way;
 import com.percolation.domain.matrix.Matrix;
 import com.percolation.domain.matrix.MatrixGeneratorType;
 import com.percolation.domain.statistic.BlackHoleLightningStatistic;
 import com.percolation.domain.statistic.ClusterStatistic;
 import com.percolation.domain.statistic.MatrixBlackHoleStatistic;
+import com.percolation.domain.statistic.WayLighningStatistic;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -24,7 +26,8 @@ public class IOUtils {
     private static final String WAY_LIGHTNING_STATISTIC = "way_lightning_statistic";
     private static final String CSV_CLUSTER_STATISTIC_HEADER = "averageAmountClusters,averageSizeCluster,averageDistanceBetweenClusters";
     private static final String CSV_BLACK_HOLE_LIGHTNING_STATISTIC_HEADER = "averageAmountBlackHole,concentrationBlackHole";
-    private static final String CSV_WAY_LIGHTNING_STATISTIC_HEADER = ",";
+    private static final String CSV_WAY_LIGHTNING_STATISTIC_HEADER = "id,p,n,lengthWay,redCell,sizeHole,averageLength";
+    private static final String FILENAME = "wayLightningStatistics";
 
     // test constants
     public static final String TEST_RESOURCES_FOLDER = "test-resources/";
@@ -146,6 +149,36 @@ public class IOUtils {
         }
         return OUT_FOLDER + fileName;
     }
+
+    @SuppressWarnings("Duplicates")
+    public String writeMatrixWayStatisticsToCSV(WayLighningStatistic wayLighningStatistic, int matrixSize) {
+        String fileName = FILENAME + "_" + "size" + matrixSize + "x" + matrixSize + ".csv";
+        try (FileWriter fileWriter = new FileWriter(OUT_FOLDER + fileName)) {
+            fileWriter.append(CSV_WAY_LIGHTNING_STATISTIC_HEADER);
+            fileWriter.append(LINE_SEPARATOR);
+            for (Way way : wayLighningStatistic.getWay()) {
+                fileWriter.append(String.valueOf(way.getMatrix().getId()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(way.getMatrix().getP()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(way.getMatrix().getN()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(way.getLengthWay()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(way.getRedCell()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(way.getSizeHole()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(wayLighningStatistic.getAverageWay()));
+                fileWriter.append(LINE_SEPARATOR);
+            }
+            System.out.println("Write to CSV file succeeded! See result: " + OUT_FOLDER + fileName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return OUT_FOLDER + fileName;
+    }
+
 
     @SuppressWarnings("Duplicates")
     public void writeClusterStatistic(List<ClusterStatistic> clusterStatistics) {
