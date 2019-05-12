@@ -37,13 +37,13 @@ public class ControlTwo {
     Label exp = new Label();
     Label P = new Label();
     ComboBox ComP = new ComboBox();
-    ObservableList< String> var1 =
+    ObservableList<String> var1 =
             FXCollections.observableArrayList(
                     "Вертикальный", "Горизонтальный"
             );
 
     @FXML
-    public void AddVar(){
+    public void AddVar() {
         if (Zapol.getValue() == "Детерминированное распределение") {
             Param.getChildren().remove(MatP);
             Param.getChildren().remove(P);
@@ -116,55 +116,53 @@ public class ControlTwo {
     }
 
     @FXML
-    public void initialize(){
-        ObservableList< String> var =
+    public void initialize() {
+        ObservableList<String> var =
                 FXCollections.observableArrayList(
                         "Детерминированное распределение", "Градиент", "Градиент Мостового", "Равномерное распределение"
                 );
         String clr = "";
         Zapol.setItems(var);
-                OK.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        Nint = Integer.parseInt(MatN.getText());
-                        if (Zapol.getValue() == "Градиент Мостового"){
-                            if (ComP.getValue() == "Горизонтальный") {
-                                Pint = 1;
-                                Tint = 1;
-                            }
-                            else{
-                                Pint = -1;
-                                Tint = 1;
-                            }
-                        }
-                        else {
-                            Tint = Integer.parseInt(MatT.getText());
-                            Pint = Float.parseFloat(MatP.getText());
-                        }
-                        if (Zapol.getValue() == "Детерминированное распределение")
-                            Controller.getInstance().setMatr(MatrixService.getInstance().createMatrices(Tint, Nint, Pint, MatrixGeneratorType.UNIFORM));
-                        if (Zapol.getValue() == "Градиент")
-                            Controller.getInstance().setMatr(MatrixService.getInstance().createMatrices(Tint, Nint, Pint, MatrixGeneratorType.GRADIENT));
-                        if (Zapol.getValue() == "Градиент Мостового")
-                            Controller.getInstance().setMatr(MatrixService.getInstance().createMatrices(Tint, Nint, Pint, MatrixGeneratorType.MOSTOVOY_GRADIENT));
-                        if (Zapol.getValue() == "Равномерное распределение")
-                            Controller.getInstance().setMatr(MatrixService.getInstance().createMatrices(Tint, Nint, Pint, MatrixGeneratorType.UNIFORM_DISTRIBUTION));
-                        Stage stage = (Stage) OK.getScene().getWindow();
-                        stage.close();
+        OK.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Nint = Integer.parseInt(MatN.getText());
+                if (Zapol.getValue() == "Градиент Мостового") {
+                    if (ComP.getValue() == "Горизонтальный") {
+                        Pint = 1;
+                        Tint = 1;
+                    } else {
+                        Pint = -1;
+                        Tint = 1;
                     }
-                });
-                sbros.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        Param.getChildren().remove(MatP);
-                        Param.getChildren().remove(P);
-                        Param.getChildren().remove(ComP);
-                        Param.getChildren().remove(exp);
-                        Param.getChildren().remove(MatT);
-                        MatN.clear();
-                        Zapol.setValue(clr);
-                    }
-                });
+                } else {
+                    Tint = Integer.parseInt(MatT.getText());
+                    Pint = Float.parseFloat(MatP.getText());
+                }
+                if (Zapol.getValue() == "Детерминированное распределение")
+                    Controller.getInstance().setMatr(MatrixService.getInstance().createMatrices(Tint, Nint, Pint, MatrixGeneratorType.UNIFORM));
+                if (Zapol.getValue() == "Градиент")
+                    Controller.getInstance().setMatr(MatrixService.getInstance().createMatrices(Tint, Nint, Pint, MatrixGeneratorType.GRADIENT));
+                if (Zapol.getValue() == "Градиент Мостового")
+                    Controller.getInstance().setMatr(MatrixService.getInstance().createMatrices(Tint, Nint, Pint, MatrixGeneratorType.MOSTOVOY_GRADIENT));
+                if (Zapol.getValue() == "Равномерное распределение")
+                    Controller.getInstance().setMatr(MatrixService.getInstance().createMatrices(Tint, Nint, Pint, MatrixGeneratorType.UNIFORM_DISTRIBUTION));
+                Stage stage = (Stage) OK.getScene().getWindow();
+                stage.close();
+            }
+        });
+        sbros.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Param.getChildren().remove(MatP);
+                Param.getChildren().remove(P);
+                Param.getChildren().remove(ComP);
+                Param.getChildren().remove(exp);
+                Param.getChildren().remove(MatT);
+                MatN.clear();
+                Zapol.setValue(clr);
+            }
+        });
     }
 
 }

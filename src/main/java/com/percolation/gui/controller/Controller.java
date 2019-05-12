@@ -102,7 +102,7 @@ public class Controller {
             @Override
             public void handle(WindowEvent we) {
                 if (Matr.get(0).getGeneratorType() == MatrixGeneratorType.UNIFORM) {
-                    if (UniM == null){
+                    if (UniM == null) {
                         UniB.setText("Детерминированное распределение");
                         UniB.setLayoutY(LY);
                         LY = LY + 52.0;
@@ -113,8 +113,8 @@ public class Controller {
                     UniM = Matr;
                     System.out.println(UniM.size());
                 }
-                if (Matr.get(0).getGeneratorType() == MatrixGeneratorType.GRADIENT){
-                    if (GradM == null){
+                if (Matr.get(0).getGeneratorType() == MatrixGeneratorType.GRADIENT) {
+                    if (GradM == null) {
                         GradB.setText("Градиент");
                         GradB.setLayoutY(LY);
                         LY = LY + 31.0;
@@ -125,7 +125,7 @@ public class Controller {
                     GradM = Matr;
                 }
                 if (Matr.get(0).getGeneratorType() == MatrixGeneratorType.MOSTOVOY_GRADIENT) {
-                    if (MGradM == null){
+                    if (MGradM == null) {
                         MGradB.setText("Градиент Мостового");
                         MGradB.setLayoutY(LY);
                         LY = LY + 31.0;
@@ -136,7 +136,7 @@ public class Controller {
                     MGradM = Matr;
                 }
                 if (Matr.get(0).getGeneratorType() == MatrixGeneratorType.UNIFORM_DISTRIBUTION) {
-                    if (UniDM == null){
+                    if (UniDM == null) {
                         UniDB.setText("Равномерное распределение");
                         UniDB.setLayoutY(LY);
                         LY = LY + 52.0;
@@ -152,7 +152,7 @@ public class Controller {
     }
 
     private Image createColorScaleImage(Matrix matr, int width, int height, int mnozh) {
-        WritableImage image = new WritableImage(width*mnozh, height*mnozh);
+        WritableImage image = new WritableImage(width * mnozh, height * mnozh);
         PixelWriter pixelWriter = image.getPixelWriter();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -164,7 +164,8 @@ public class Controller {
                             double value = matr.getCellValue(x, y).getClusterId();
                             pixelWriter.setColor(x1 + i, y1 + j, Color.hsb(value, 1, 1));
                         } else pixelWriter.setColor(x1 + i, y1 + j, Color.WHITE);
-                        if (i == 0 || j == 0 || i == mnozh-1 || j == mnozh-1) pixelWriter.setColor(x1 + i, y1 + j, Color.BLACK);
+                        if (i == 0 || j == 0 || i == mnozh - 1 || j == mnozh - 1)
+                            pixelWriter.setColor(x1 + i, y1 + j, Color.BLACK);
                     }
                 }
             }
@@ -190,7 +191,9 @@ public class Controller {
         scenefile.setScene(new Scene(file, scenefile.getWidth(), scenefile.getHeight()));
         scenefile.initModality(Modality.APPLICATION_MODAL);
         scenefile.show();
-    };
+    }
+
+    ;
 
     @FXML
     public void printMatrix(Matrix matr) {
@@ -200,7 +203,7 @@ public class Controller {
         Pvalue.setVisible(true);
         scrimg.setVisible(true);
         imgcon.setVisible(true);
-        if (matr.isContainPercolation()==true)
+        if (matr.isContainPercolation() == true)
             perc.setText("Перколяция есть");
         else perc.setText("Перколяции нет");
         size.setText("Размер: " + Integer.toString(matr.getN()) + "х" + Integer.toString(matr.getN()));
@@ -208,7 +211,7 @@ public class Controller {
         Pvalue.setText("Вероятность: " + Double.toString(matr.getP()));
         primaryStage.getChildren().remove(imgcon);
         imgcon.getChildren().remove(imageView);
-        Image colorScale = createColorScaleImage(matr, matr.getN(), matr.getN(),11);
+        Image colorScale = createColorScaleImage(matr, matr.getN(), matr.getN(), 11);
         imageView.setImage(colorScale);
         imgcon.getChildren().addAll(imageView);
     }
@@ -346,13 +349,13 @@ public class Controller {
             public void handle(MouseEvent mouseEvent) {
                 scroll.setVisible(true);
                 GridPane root1 = new GridPane();
-                Button[] matrix = new Button [UniM.size()];
-                for (int i = 0; i<UniM.size(); i++){
+                Button[] matrix = new Button[UniM.size()];
+                for (int i = 0; i < UniM.size(); i++) {
                     matrix[i] = new Button(/*"Matrix" +  i*/);
                     matrix[i].setText("Матрица " + (i + 1));
                     matrix[i].setPrefWidth(185);
-                    root1.setRowIndex(matrix[i],i);
-                    root1.setColumnIndex(matrix[i],0);
+                    root1.setRowIndex(matrix[i], i);
+                    root1.setColumnIndex(matrix[i], 0);
                     root1.getChildren().add(matrix[i]);
                     int finalI = i;
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -370,13 +373,13 @@ public class Controller {
             public void handle(MouseEvent mouseEvent) {
                 scroll.setVisible(true);
                 GridPane root1 = new GridPane();
-                Button[] matrix = new Button [GradM.size()];
-                for (int i = 0; i<GradM.size(); i++){
+                Button[] matrix = new Button[GradM.size()];
+                for (int i = 0; i < GradM.size(); i++) {
                     matrix[i] = new Button(/*"Matrix" +  i*/);
                     matrix[i].setText("Матрица " + (i + 1));
                     matrix[i].setPrefWidth(185);
-                    root1.setRowIndex(matrix[i],i);
-                    root1.setColumnIndex(matrix[i],0);
+                    root1.setRowIndex(matrix[i], i);
+                    root1.setColumnIndex(matrix[i], 0);
                     root1.getChildren().add(matrix[i]);
                     int finalI = i;
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -394,13 +397,13 @@ public class Controller {
             public void handle(MouseEvent mouseEvent) {
                 scroll.setVisible(true);
                 GridPane root1 = new GridPane();
-                Button[] matrix = new Button [MGradM.size()];
-                for (int i = 0; i<MGradM.size(); i++){
+                Button[] matrix = new Button[MGradM.size()];
+                for (int i = 0; i < MGradM.size(); i++) {
                     matrix[i] = new Button(/*"Matrix" +  i*/);
                     matrix[i].setText("Матрица " + (i + 1));
                     matrix[i].setPrefWidth(185);
-                    root1.setRowIndex(matrix[i],i);
-                    root1.setColumnIndex(matrix[i],0);
+                    root1.setRowIndex(matrix[i], i);
+                    root1.setColumnIndex(matrix[i], 0);
                     root1.getChildren().add(matrix[i]);
                     int finalI = i;
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -418,13 +421,13 @@ public class Controller {
             public void handle(MouseEvent mouseEvent) {
                 scroll.setVisible(true);
                 GridPane root1 = new GridPane();
-                Button[] matrix = new Button [UniDM.size()];
-                for (int i = 0; i<UniDM.size(); i++){
+                Button[] matrix = new Button[UniDM.size()];
+                for (int i = 0; i < UniDM.size(); i++) {
                     matrix[i] = new Button(/*"Matrix" +  i*/);
                     matrix[i].setText("Матрица " + (i + 1));
                     matrix[i].setPrefWidth(185);
-                    root1.setRowIndex(matrix[i],i);
-                    root1.setColumnIndex(matrix[i],0);
+                    root1.setRowIndex(matrix[i], i);
+                    root1.setColumnIndex(matrix[i], 0);
                     root1.getChildren().add(matrix[i]);
                     int finalI = i;
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {

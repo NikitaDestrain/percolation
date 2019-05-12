@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+
 import java.awt.*;
 import java.util.List;
 
@@ -24,11 +25,11 @@ public class ControllerFile {
     public CheckBox CB;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         OK.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (CB.isSelected()==true){
+                if (CB.isSelected() == true) {
                     matr = Controller.getInstance().getMatr();
                     MatrixService.getInstance().calculateMatrixBlackHoleStatistic(matr, true);
                 }
