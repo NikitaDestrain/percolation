@@ -16,6 +16,9 @@ import com.percolation.io.IOUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Nikita Govokhin, Dmitryi Vasiliev
+ */
 public class MatrixService {
 
     private IOUtils ioUtils;
@@ -156,6 +159,8 @@ public class MatrixService {
     }
 
     public ClusterStatistic getClusterStatistic(List<Matrix> matrices) {
-        return statisticCalculator.calculateClusterStatistic(matrices);
+        ClusterStatistic clusterStatistic = statisticCalculator.calculateClusterStatistic(matrices);
+        ioUtils.writeClusterStatistic(clusterStatistic);
+        return clusterStatistic;
     }
 }

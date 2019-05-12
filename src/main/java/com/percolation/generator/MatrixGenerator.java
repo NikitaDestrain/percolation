@@ -4,6 +4,9 @@ import com.percolation.domain.matrix.Matrix;
 
 import java.util.List;
 
+/**
+ * @author Nikita Govokhin
+ */
 public interface MatrixGenerator {
     Matrix generateRandomMatrix(int id, int N, double p);
 

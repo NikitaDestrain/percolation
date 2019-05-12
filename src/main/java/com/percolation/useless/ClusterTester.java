@@ -1,4 +1,4 @@
-package com.percolation;
+package com.percolation.useless;
 
 import com.percolation.domain.matrix.Matrix;
 import com.percolation.domain.matrix.MatrixGeneratorType;
@@ -39,10 +39,10 @@ public class ClusterTester {
             System.out.println();
         }
         System.out.println(matrix.getHumanReadableMatrixWithClusters());
-*/
+
         List<Matrix> testMatrices = IOUtils.getInstance().readTestMatrices();
         for (Matrix m : testMatrices) {
             System.out.println(m.getHumanReadableMatrixWithClusters());
-        }
+        }*/
     }
 }

@@ -1,4 +1,4 @@
-package com.percolation;
+package com.percolation.useless;
 
 import com.percolation.calculate.StatisticCalculator;
 import com.percolation.domain.matrix.Matrix;

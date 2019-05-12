@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author Nikita Govokhin
+ */
 public class GradientMatrixGenerator implements MatrixGenerator {
 
     private static final double MIN_P = 0.01;

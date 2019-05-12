@@ -9,8 +9,10 @@ import com.percolation.domain.statistic.MatrixBlackHoleStatistic;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
+/**
+ * @author Nikita Govokhin
+ */
 public class StatisticCalculator {
 
     private static StatisticCalculator instance;
@@ -126,7 +128,7 @@ public class StatisticCalculator {
         ClusterStatistic result = new ClusterStatistic();
         result.setAverageAmountClusters(avgAmountClusters);
         result.setAverageSizeCluster(avgSizeCluster);
-        
+
         return result;
     }
 }

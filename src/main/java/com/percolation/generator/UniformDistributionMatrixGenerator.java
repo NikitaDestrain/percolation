@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author Nikita Govokhin
+ */
 public class UniformDistributionMatrixGenerator implements MatrixGenerator {
 
     private Randomizer randomizer;

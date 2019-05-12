@@ -5,6 +5,9 @@ import com.percolation.detection.PercolationDetection;
 import com.percolation.domain.matrix.Matrix;
 import com.percolation.domain.matrix.MatrixGeneratorType;
 
+/**
+ * @author Nikita Govokhin
+ */
 public class MostovoyGradientMatrixGenerator {
 
     private MatrixGeneratorType generatorType;

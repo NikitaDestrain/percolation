@@ -2,6 +2,9 @@ package com.percolation.generator;
 
 import java.util.Random;
 
+/**
+ * @author Nikita Govokhin
+ */
 class Randomizer {
 
     private Random worker;

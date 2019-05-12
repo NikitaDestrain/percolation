@@ -2,6 +2,9 @@ package com.percolation.domain.matrix;
 
 import lombok.Data;
 
+/**
+ * @author Nikita Govokhin, Dmitryi Vasiliev
+ */
 @Data
 public class Cell {
     private Cluster cluster;

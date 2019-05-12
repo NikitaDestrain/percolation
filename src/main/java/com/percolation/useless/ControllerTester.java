@@ -1,4 +1,4 @@
-package com.percolation;
+package com.percolation.useless;
 
 import com.percolation.domain.matrix.Matrix;
 import com.percolation.domain.matrix.MatrixGeneratorType;

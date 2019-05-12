@@ -4,6 +4,9 @@ import com.percolation.domain.matrix.Cell;
 import com.percolation.domain.matrix.Cluster;
 import com.percolation.domain.matrix.Matrix;
 
+/**
+ * @author Nikita Govokhin
+ */
 public class ClusterDetection {
 
     private static ClusterDetection instance;

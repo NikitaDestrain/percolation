@@ -1,4 +1,4 @@
-package com.percolation;
+package com.percolation.useless;
 
 import com.percolation.detection.DejkstraDetection;
 import com.percolation.domain.matrix.Cluster;

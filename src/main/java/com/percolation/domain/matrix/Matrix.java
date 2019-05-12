@@ -5,8 +5,11 @@ import lombok.Data;
 
 import java.util.*;
 
+/**
+ * @author Nikita Govokhin
+ */
 @Data
-public class Matrix implements Cloneable{
+public class Matrix implements Cloneable {
     // NxN = size
     private int id;
     private boolean containPercolation;
@@ -97,25 +100,25 @@ public class Matrix implements Cloneable{
         return sb.toString();
     }
 
-//    public int getCoordX(Cell cell) {
-//        for (int i = 0; i < values.length; i++) {
-//            for (int j = 0; j < values.length; j++) {
-//                if (values[i][j] == cell)
-//                    return j;
-//            }
-//        }
-//        return -1;
-//    }
-//
-//    public int getCoordY(Cell cell) {
-//        for (int i = 0; i < values.length; i++) {
-//            for (int j = 0; j < values.length; j++) {
-//                if (values[i][j] == cell)
-//                    return i;
-//            }
-//        }
-//        return -1;
-//    }
+    public int getCoordX(Cell cell) {
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values.length; j++) {
+                if (values[i][j] == cell)
+                    return j;
+            }
+        }
+        return -1;
+    }
+
+    public int getCoordY(Cell cell) {
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values.length; j++) {
+                if (values[i][j] == cell)
+                    return i;
+            }
+        }
+        return -1;
+    }
 
     public void addCluster(Cluster cluster) {
         clusters.add(cluster);
@@ -129,7 +132,7 @@ public class Matrix implements Cloneable{
         clusters.remove(cluster);
     }
 
-    public Matrix clone() throws CloneNotSupportedException{
+    public Matrix clone() throws CloneNotSupportedException {
 
         return (Matrix) super.clone();
     }

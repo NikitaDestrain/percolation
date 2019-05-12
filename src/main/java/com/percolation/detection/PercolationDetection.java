@@ -6,6 +6,9 @@ import com.percolation.domain.matrix.Matrix;
 
 import java.util.*;
 
+/**
+ * @author Nikita Govokhin
+ */
 public class PercolationDetection {
 
     private static PercolationDetection instance;
