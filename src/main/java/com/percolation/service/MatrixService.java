@@ -24,6 +24,7 @@ public class MatrixService {
     private MostovoyGradientMatrixGenerator mostovoyGradientMatrixGenerator;
     private UniformDistributionMatrixGenerator uniformDistributionMatrixGenerator;
     private StatisticCalculator statisticCalculator;
+    private DejkstraDetection dejkstraDetection;
 
     // containers
     private List<Matrix> currentMatrices;
@@ -38,6 +39,7 @@ public class MatrixService {
         this.gradientMatrixGenerator = new GradientMatrixGenerator();
         this.mostovoyGradientMatrixGenerator = new MostovoyGradientMatrixGenerator();
         this.uniformDistributionMatrixGenerator = new UniformDistributionMatrixGenerator();
+        this.dejkstraDetection = DejkstraDetection.getInstance();
     }
 
     public static MatrixService getInstance() {
@@ -127,13 +129,12 @@ public class MatrixService {
         return ioUtils.writeMatrixStatisticsToCSV(generatorName, list, matrixSize);
     }
 
-    public String writeMatrixWayStatisticToFile(String generatorName, List<Matrix> matrices, int matrixSize) throws CloneNotSupportedException {
-        DejkstraDetection dejkstraDetection = DejkstraDetection.getInstance();
-        for (Matrix matrix : matrices
-        ) {
-            dejkstraDetection.setMatrix(matrix);
-            dejkstraDetection.setupDejkstra();
-        }
+    public void getShortestWayMatrix(Matrix matrix) throws CloneNotSupportedException {
+        dejkstraDetection.setMatrix(matrix);
+        dejkstraDetection.setupDejkstra();
+    }
+
+    public String writeMatrixWayStatisticToFile(int matrixSize) {
         return ioUtils.writeMatrixWayStatisticsToCSV(dejkstraDetection.getWayStatistics(), matrixSize);
     }
 

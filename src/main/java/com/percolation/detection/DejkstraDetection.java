@@ -19,7 +19,7 @@ public class DejkstraDetection {
     int counter = 0;
     private boolean flag = false;
     private ArrayList<Way> ways = new ArrayList<>();
-
+    private Way shortestWay;
     private ArrayList<Way> waysShortest = new ArrayList<>();
 
     private DejkstraDetection() {
@@ -133,6 +133,7 @@ public class DejkstraDetection {
             findWay();
         }
         findShortestWay();
+        calculateWidthWay();
     }
 
     private void calculateWidthWay() {
@@ -142,13 +143,13 @@ public class DejkstraDetection {
             for (Cell cell : waysShortest.get(i).getWayArray()
             ) {
 
-                if(cell.getX() > max)
+                if (cell.getX() > max)
                     max = cell.getX();
-                if(cell.getX() < min)
+                if (cell.getX() < min)
                     min = cell.getX();
 
             }
-            waysShortest.get(i).setWidthWay(max-min);
+            waysShortest.get(i).setWidthWay(max - min);
         }
     }
 
@@ -161,7 +162,12 @@ public class DejkstraDetection {
                 way = way1;
             }
         }
+        this.shortestWay = way;
         waysShortest.add(way);
+    }
+
+    public Way getShortestWay() {
+        return shortestWay;
     }
 
     public void findWay() throws CloneNotSupportedException {
