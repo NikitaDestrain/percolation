@@ -162,7 +162,7 @@ public class Controller {
                     for (int j = 0; j < mnozh; j++) {
                         if (matr.getCellValue(x, y).getHumanReadableValue() == 1) {
                             double value = matr.getCellValue(x, y).getClusterId();
-                            pixelWriter.setColor(x1 + i, y1 + j, Color.hsb(value, 1, 1));
+                            pixelWriter.setColor(x1 + i, y1 + j, Color.hsb(value*30, 1, 1));
                         } else pixelWriter.setColor(x1 + i, y1 + j, Color.WHITE);
                         if (i == 0 || j == 0 || i == mnozh - 1 || j == mnozh - 1)
                             pixelWriter.setColor(x1 + i, y1 + j, Color.BLACK);
