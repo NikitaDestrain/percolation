@@ -68,9 +68,8 @@ public class Controller {
     Button GradB = new Button();
     Button MGradB = new Button();
     Button UniDB = new Button();
+    Button way;
     ImageView imageView = new ImageView();
-    WritableImage image;
-    PixelWriter pixelWriter;
     int x1, y1;
     Way put = null;
 
@@ -94,7 +93,6 @@ public class Controller {
     public Label size;
     public Label blkpnt;
     public Label Pvalue;
-    public Button way;
 
 
     @FXML
@@ -159,9 +157,9 @@ public class Controller {
         });
     }
 
-    private Image createColorScaleImage(Matrix matr, int width, int height, int mnozh) {
-        image = new WritableImage(width * mnozh, height * mnozh);
-        pixelWriter = image.getPixelWriter();
+    private Image createColorScaleImage(Matrix matr, int width, int height, int mnozh, boolean bway) throws CloneNotSupportedException {
+        WritableImage image = new WritableImage(width * mnozh, height * mnozh);
+        PixelWriter pixelWriter = image.getPixelWriter();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 x1 = x * mnozh;
@@ -169,9 +167,31 @@ public class Controller {
                 for (int i = 0; i < mnozh; i++) {
                     for (int j = 0; j < mnozh; j++) {
                         if (matr.getCellValue(x, y).getHumanReadableValue() == 1) {
-                            double value = matr.getCellValue(x, y).getClusterId();
-                            pixelWriter.setColor(x1 + i, y1 + j, Color.hsb(value * 30, 1, 1));
+                            double value = matr.getCellValue(x, y).getClusterId() * 30;
+                            if (Color.hsb(value, 1, 1) == Color.RED)
+                                pixelWriter.setColor(x1 + i, y1 + j, Color.BROWN);
+                            pixelWriter.setColor(x1 + i, y1 + j, Color.hsb(value, 1, 1));
                         } else pixelWriter.setColor(x1 + i, y1 + j, Color.WHITE);
+                        if (i == 0 || j == 0 || i == mnozh - 1 || j == mnozh - 1)
+                            pixelWriter.setColor(x1 + i, y1 + j, Color.BLACK);
+                    }
+                }
+            }
+        }
+        if (bway == true) {
+            put = MatrixService.getInstance().getShortestWayMatrix(matr);
+            System.out.println(put.getWayArray().size());
+            int x, y;
+            for (Cell cell : put.getWayArray()) {
+                x = cell.getX();
+                y = cell.getY();
+                x1 = x * mnozh;
+                y1 = y * mnozh;
+                for (int i = 0; i < mnozh; i++) {
+                    for (int j = 0; j < mnozh; j++) {
+                        if (matr.getCellValue(x, y).getHumanReadableValue() == 1) {
+                            pixelWriter.setColor(x1 + i, y1 + j, Color.RED);
+                        } else pixelWriter.setColor(x1 + i, y1 + j, Color.PINK);
                         if (i == 0 || j == 0 || i == mnozh - 1 || j == mnozh - 1)
                             pixelWriter.setColor(x1 + i, y1 + j, Color.BLACK);
                     }
@@ -204,7 +224,7 @@ public class Controller {
     ;
 
     @FXML
-    public void printMatrix(Matrix matr) {
+    public void printMatrix(Matrix matr, boolean bway) throws CloneNotSupportedException {
         perc.setVisible(true);
         size.setVisible(true);
         blkpnt.setVisible(true);
@@ -219,34 +239,11 @@ public class Controller {
         Pvalue.setText("Вероятность: " + Double.toString(matr.getP()));
         primaryStage.getChildren().remove(imgcon);
         imgcon.getChildren().remove(imageView);
-        Image colorScale = createColorScaleImage(matr, matr.getN(), matr.getN(), 11);
+        Image colorScale = createColorScaleImage(matr, matr.getN(), matr.getN(), 11, bway);
         imageView.setImage(colorScale);
         imgcon.getChildren().addAll(imageView);
     }
 
-    @FXML
-    public void printWay(Matrix matr, int mnozh) throws CloneNotSupportedException {
-        put = MatrixService.getInstance().getShortestWayMatrix(matr);
-        System.out.println(put.getLengthWay());
-        int x, y;
-        for (Cell cell : put.getWayArray()) {
-            x = cell.getX();
-            y = cell.getY();
-            x1 = x * mnozh;
-            y1 = y * mnozh;
-            pixelWriter = image.getPixelWriter();
-            for (int i = 0; i < mnozh; i++) {
-                for (int j = 0; j < mnozh; j++) {
-                    if (matr.getCellValue(x, y).getHumanReadableValue() == 1) {
-                        double value = matr.getCellValue(x, y).getClusterId();
-                        pixelWriter.setColor(x1 + i, y1 + j, Color.PINK);
-                    } else pixelWriter.setColor(x1 + i, y1 + j, Color.RED);
-                    if (i == 0 || j == 0 || i == mnozh - 1 || j == mnozh - 1)
-                        pixelWriter.setColor(x1 + i, y1 + j, Color.BLACK);
-                }
-            }
-        }
-    }
 
     @FXML
     public void initialize() {
@@ -264,19 +261,28 @@ public class Controller {
         size.setVisible(false);
         blkpnt.setVisible(false);
         Pvalue.setVisible(false);
-        way.setVisible(false);
         data.setDisable(true);
         chess.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way.setVisible(true);
+                way = new Button();
+                primaryStage.getChildren().remove(way);
+                way.setText("Проложить путь");
+                way.setLayoutX(380.0);
+                way.setLayoutY(140.0);
+                way.setMnemonicParsing(false);
+                primaryStage.getChildren().addAll(way);
                 scroll.setVisible(false);
-                printMatrix(TestM.get(0));
+                try {
+                    printMatrix(TestM.get(0), false);
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
                 way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         try {
-                            printWay(TestM.get(0), 11);
+                            printMatrix(TestM.get(0), true);
                         } catch (CloneNotSupportedException e) {
                             e.printStackTrace();
                         }
@@ -287,14 +293,24 @@ public class Controller {
         circles.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way.setVisible(true);
+                way = new Button();
+                primaryStage.getChildren().remove(way);
+                way.setText("Проложить путь");
+                way.setLayoutX(380.0);
+                way.setLayoutY(140.0);
+                way.setMnemonicParsing(false);
+                primaryStage.getChildren().addAll(way);
                 scroll.setVisible(false);
-                printMatrix(TestM.get(1));
+                try {
+                    printMatrix(TestM.get(1), false);
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
                 way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         try {
-                            printWay(TestM.get(1), 11);
+                            printMatrix(TestM.get(1), true);
                         } catch (CloneNotSupportedException e) {
                             e.printStackTrace();
                         }
@@ -305,14 +321,24 @@ public class Controller {
         krest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way.setVisible(true);
+                way = new Button();
+                primaryStage.getChildren().remove(way);
+                way.setText("Проложить путь");
+                way.setLayoutX(380.0);
+                way.setLayoutY(140.0);
+                way.setMnemonicParsing(false);
+                primaryStage.getChildren().addAll(way);
                 scroll.setVisible(false);
-                printMatrix(TestM.get(2));
+                try {
+                    printMatrix(TestM.get(2), false);
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
                 way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         try {
-                            printWay(TestM.get(2), 11);
+                            printMatrix(TestM.get(2), true);;
                         } catch (CloneNotSupportedException e) {
                             e.printStackTrace();
                         }
@@ -323,14 +349,24 @@ public class Controller {
         horpol.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way.setVisible(true);
+                way = new Button();
+                primaryStage.getChildren().remove(way);
+                way.setText("Проложить путь");
+                way.setLayoutX(380.0);
+                way.setLayoutY(140.0);
+                way.setMnemonicParsing(false);
+                primaryStage.getChildren().addAll(way);
                 scroll.setVisible(false);
-                printMatrix(TestM.get(3));
+                try {
+                    printMatrix(TestM.get(3), false);
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
                 way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         try {
-                            printWay(TestM.get(3), 11);
+                            printMatrix(TestM.get(3), true);;
                         } catch (CloneNotSupportedException e) {
                             e.printStackTrace();
                         }
@@ -341,14 +377,24 @@ public class Controller {
         verpol.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way.setVisible(true);
+                way = new Button();
+                primaryStage.getChildren().remove(way);
+                way.setText("Проложить путь");
+                way.setLayoutX(380.0);
+                way.setLayoutY(140.0);
+                way.setMnemonicParsing(false);
+                primaryStage.getChildren().addAll(way);
                 scroll.setVisible(false);
-                printMatrix(TestM.get(4));
+                try {
+                    printMatrix(TestM.get(4), false);
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
                 way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         try {
-                            printWay(TestM.get(4), 11);
+                            printMatrix(TestM.get(4), true);
                         } catch (CloneNotSupportedException e) {
                             e.printStackTrace();
                         }
@@ -359,14 +405,24 @@ public class Controller {
         rain.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way.setVisible(true);
+                way = new Button();
+                primaryStage.getChildren().remove(way);
+                way.setText("Проложить путь");
+                way.setLayoutX(380.0);
+                way.setLayoutY(140.0);
+                way.setMnemonicParsing(false);
+                primaryStage.getChildren().addAll(way);
                 scroll.setVisible(false);
-                printMatrix(TestM.get(5));
+                try {
+                    printMatrix(TestM.get(5), false);
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
                 way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         try {
-                            printWay(TestM.get(5), 11);
+                            printMatrix(TestM.get(5), true);
                         } catch (CloneNotSupportedException e) {
                             e.printStackTrace();
                         }
@@ -377,14 +433,24 @@ public class Controller {
         htest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way.setVisible(true);
+                way = new Button();
+                primaryStage.getChildren().remove(way);
+                way.setText("Проложить путь");
+                way.setLayoutX(380.0);
+                way.setLayoutY(140.0);
+                way.setMnemonicParsing(false);
+                primaryStage.getChildren().add(way);
                 scroll.setVisible(false);
-                printMatrix(TestM.get(6));
+                try {
+                    printMatrix(TestM.get(6), false);
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
                 way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         try {
-                            printWay(TestM.get(6), 11);
+                            printMatrix(TestM.get(6), true);
                         } catch (CloneNotSupportedException e) {
                             e.printStackTrace();
                         }
@@ -409,13 +475,23 @@ public class Controller {
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            way.setVisible(true);
-                            printMatrix(UniM.get(finalI));
+                            way = new Button();
+                            primaryStage.getChildren().remove(way);
+                            way.setText("Проложить путь");
+                            way.setLayoutX(380.0);
+                            way.setLayoutY(140.0);
+                            way.setMnemonicParsing(false);
+                            primaryStage.getChildren().addAll(way);
+                            try {
+                                printMatrix(UniM.get(finalI), false);
+                            } catch (CloneNotSupportedException e) {
+                                e.printStackTrace();
+                            }
                             way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
                                     try {
-                                        printWay(UniM.get(finalI), 11);
+                                        printMatrix(UniM.get(finalI), true);
                                     } catch (CloneNotSupportedException e) {
                                         e.printStackTrace();
                                     }
@@ -444,13 +520,23 @@ public class Controller {
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            way.setVisible(true);
-                            printMatrix(GradM.get(finalI));
+                            way = new Button();
+                            primaryStage.getChildren().remove(way);
+                            way.setText("Проложить путь");
+                            way.setLayoutX(380.0);
+                            way.setLayoutY(140.0);
+                            way.setMnemonicParsing(false);
+                            primaryStage.getChildren().addAll(way);
+                            try {
+                                printMatrix(GradM.get(finalI), false);
+                            } catch (CloneNotSupportedException e) {
+                                e.printStackTrace();
+                            }
                             way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
                                     try {
-                                        printWay(GradM.get(finalI), 11);
+                                        printMatrix(GradM.get(finalI), true);
                                     } catch (CloneNotSupportedException e) {
                                         e.printStackTrace();
                                     }
@@ -479,13 +565,23 @@ public class Controller {
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            way.setVisible(true);
-                            printMatrix(MGradM.get(finalI));
+                            way = new Button();
+                            primaryStage.getChildren().remove(way);
+                            way.setText("Проложить путь");
+                            way.setLayoutX(380.0);
+                            way.setLayoutY(140.0);
+                            way.setMnemonicParsing(false);
+                            primaryStage.getChildren().addAll(way);
+                            try {
+                                printMatrix(MGradM.get(finalI), false);
+                            } catch (CloneNotSupportedException e) {
+                                e.printStackTrace();
+                            }
                             way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
                                     try {
-                                        printWay(MGradM.get(finalI), 11);
+                                        printMatrix(MGradM.get(finalI), true);
                                     } catch (CloneNotSupportedException e) {
                                         e.printStackTrace();
                                     }
@@ -514,13 +610,23 @@ public class Controller {
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            printMatrix(UniDM.get(finalI));
-                            way.setVisible(true);
+                            try {
+                                printMatrix(UniDM.get(finalI), false);
+                            } catch (CloneNotSupportedException e) {
+                                e.printStackTrace();
+                            }
+                            way = new Button();
+                            primaryStage.getChildren().remove(way);
+                            way.setText("Проложить путь");
+                            way.setLayoutX(380.0);
+                            way.setLayoutY(140.0);
+                            way.setMnemonicParsing(false);
+                            primaryStage.getChildren().addAll(way);
                             way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
                                     try {
-                                        printWay(UniDM.get(finalI), 11);
+                                        printMatrix(UniDM.get(finalI), true);
                                     } catch (CloneNotSupportedException e) {
                                         e.printStackTrace();
                                     }
@@ -552,8 +658,8 @@ public class Controller {
                 primaryStage.getChildren().remove(GradB);
                 primaryStage.getChildren().remove(MGradB);
                 primaryStage.getChildren().remove(UniDB);
+                primaryStage.getChildren().remove(way);
                 data.setDisable(true);
-                way.setVisible(false);
             }
         });
     }

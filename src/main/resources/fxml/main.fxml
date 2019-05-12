@@ -34,6 +34,5 @@
       <Label fx:id="size" layoutX="499.0" layoutY="171.0" text="Размер:" />
       <Label fx:id="blkpnt" layoutX="600.0" layoutY="171.0" text="Количество &quot;черных&quot; точек: " />
       <Label fx:id="Pvalue" layoutX="831.0" layoutY="171.0" text="Вероятность:" />
-      <Button fx:id="way" layoutX="380.0" layoutY="140.0" mnemonicParsing="false" text="Проложить путь" />
    </children>
 </AnchorPane>
