@@ -11,10 +11,28 @@
 
 <AnchorPane fx:id="primaryStage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.percolation.gui.controller.Controller">
    <children>
-      <Button fx:id="play" mnemonicParsing="false" text="Play" />
-      <Button fx:id="pause" layoutX="116.0" mnemonicParsing="false" text="Pause" />
-      <Button fx:id="ishod" layoutX="232.0" mnemonicParsing="false" text="Initial state" />
-      <Button fx:id="data" layoutX="348.0" mnemonicParsing="false" onMouseClicked="#openNewStage" text="Data" />
-      <Button fx:id="print" layoutX="464.0" mnemonicParsing="false" onMouseClicked="#printMatrix" text="Print" />
+      <Button fx:id="play" mnemonicParsing="false" onMouseClicked="#GenerateRun" text="PLAY" />
+      <Button fx:id="stop" layoutX="154.0" mnemonicParsing="false" text="CLEAR" />
+      <Button fx:id="data" layoutX="317.0" onMouseClicked="#ImportFile" mnemonicParsing="false" text="DATA" />
+      <Button fx:id="chess" layoutY="192.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Шахматы" />
+      <Button fx:id="circles" layoutY="222.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Круги" />
+      <Button fx:id="krest" layoutY="253.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Мальтийский крест" />
+      <Button fx:id="horpol" layoutY="284.0" mnemonicParsing="false" text="Горизонтальные полосы" />
+      <Button fx:id="verpol" layoutY="315.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Вертикальные полосы" />
+      <Button fx:id="rain" layoutY="346.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Дождь" />
+      <Button fx:id="htest" layoutY="377.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Н тест" />
+      <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="190.0" layoutY="193.0" prefHeight="583.0" prefWidth="190.0">
+        <content>
+        </content>
+      </ScrollPane>
+      <ScrollPane fx:id="scrimg" layoutX="380.0" layoutY="193.0" prefHeight="583.0" prefWidth="565.0">
+         <content>
+            <StackPane fx:id="imgcon" prefHeight="581.0" prefWidth="562.0" />
+         </content>
+      </ScrollPane>
+      <Label fx:id="perc" layoutX="380.0" layoutY="171.0" text="Перколяция:" />
+      <Label fx:id="size" layoutX="499.0" layoutY="171.0" text="Размер:" />
+      <Label fx:id="blkpnt" layoutX="600.0" layoutY="171.0" text="Количество &quot;черных&quot; точек: " />
+      <Label fx:id="Pvalue" layoutX="831.0" layoutY="171.0" text="Вероятность:" />
    </children>
 </AnchorPane>
