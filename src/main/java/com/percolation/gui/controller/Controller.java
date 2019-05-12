@@ -271,7 +271,7 @@ public class Controller {
                 way.setLayoutX(380.0);
                 way.setLayoutY(140.0);
                 way.setMnemonicParsing(false);
-                primaryStage.getChildren().addAll(way);
+                primaryStage.getChildren().add(way);
                 scroll.setVisible(false);
                 try {
                     printMatrix(TestM.get(0), false);
@@ -299,7 +299,7 @@ public class Controller {
                 way.setLayoutX(380.0);
                 way.setLayoutY(140.0);
                 way.setMnemonicParsing(false);
-                primaryStage.getChildren().addAll(way);
+                primaryStage.getChildren().add(way);
                 scroll.setVisible(false);
                 try {
                     printMatrix(TestM.get(1), false);
@@ -327,7 +327,7 @@ public class Controller {
                 way.setLayoutX(380.0);
                 way.setLayoutY(140.0);
                 way.setMnemonicParsing(false);
-                primaryStage.getChildren().addAll(way);
+                primaryStage.getChildren().add(way);
                 scroll.setVisible(false);
                 try {
                     printMatrix(TestM.get(2), false);
@@ -355,7 +355,7 @@ public class Controller {
                 way.setLayoutX(380.0);
                 way.setLayoutY(140.0);
                 way.setMnemonicParsing(false);
-                primaryStage.getChildren().addAll(way);
+                primaryStage.getChildren().add(way);
                 scroll.setVisible(false);
                 try {
                     printMatrix(TestM.get(3), false);
@@ -383,7 +383,7 @@ public class Controller {
                 way.setLayoutX(380.0);
                 way.setLayoutY(140.0);
                 way.setMnemonicParsing(false);
-                primaryStage.getChildren().addAll(way);
+                primaryStage.getChildren().add(way);
                 scroll.setVisible(false);
                 try {
                     printMatrix(TestM.get(4), false);
@@ -411,7 +411,7 @@ public class Controller {
                 way.setLayoutX(380.0);
                 way.setLayoutY(140.0);
                 way.setMnemonicParsing(false);
-                primaryStage.getChildren().addAll(way);
+                primaryStage.getChildren().add(way);
                 scroll.setVisible(false);
                 try {
                     printMatrix(TestM.get(5), false);
@@ -481,7 +481,7 @@ public class Controller {
                             way.setLayoutX(380.0);
                             way.setLayoutY(140.0);
                             way.setMnemonicParsing(false);
-                            primaryStage.getChildren().addAll(way);
+                            primaryStage.getChildren().add(way);
                             try {
                                 printMatrix(UniM.get(finalI), false);
                             } catch (CloneNotSupportedException e) {
@@ -526,7 +526,7 @@ public class Controller {
                             way.setLayoutX(380.0);
                             way.setLayoutY(140.0);
                             way.setMnemonicParsing(false);
-                            primaryStage.getChildren().addAll(way);
+                            primaryStage.getChildren().add(way);
                             try {
                                 printMatrix(GradM.get(finalI), false);
                             } catch (CloneNotSupportedException e) {
@@ -571,7 +571,7 @@ public class Controller {
                             way.setLayoutX(380.0);
                             way.setLayoutY(140.0);
                             way.setMnemonicParsing(false);
-                            primaryStage.getChildren().addAll(way);
+                            primaryStage.getChildren().add(way);
                             try {
                                 printMatrix(MGradM.get(finalI), false);
                             } catch (CloneNotSupportedException e) {
@@ -621,7 +621,7 @@ public class Controller {
                             way.setLayoutX(380.0);
                             way.setLayoutY(140.0);
                             way.setMnemonicParsing(false);
-                            primaryStage.getChildren().addAll(way);
+                            primaryStage.getChildren().add(way);
                             way.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
