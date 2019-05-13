@@ -4,7 +4,9 @@ import com.percolation.domain.Way;
 import lombok.Data;
 
 import java.util.ArrayList;
-
+/**
+ * @author Dmitryi Vasilev
+ */
 @Data
 public class WayLighningStatistic {
     private int n;

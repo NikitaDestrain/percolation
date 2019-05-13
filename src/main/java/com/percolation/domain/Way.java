@@ -5,7 +5,9 @@ import com.percolation.domain.matrix.Matrix;
 import lombok.Data;
 
 import java.util.ArrayList;
-
+/**
+ * @author Dmitryi Vasilev
+ */
 @Data
 public class Way implements Cloneable {
     private static final int AMOUNT_COLUMN = 2;
