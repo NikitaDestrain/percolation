@@ -166,18 +166,26 @@ public class Controller {
                 y1 = y * mnozh;
                 int r = 359;
                 int m = 0;
+                double k = 1;
+                double l = 1;
                 for (int i = 0; i < mnozh; i++) {
                     for (int j = 0; j < mnozh; j++) {
                         if (matr.getCellValue(x, y).getHumanReadableValue() == 1) {
                             int value = matr.getCellValue(x, y).getClusterId();
                             if (matr.getClusters().size() < 30)
-                                value = value * 30;
+                                value = value * 25;
                             if (value > r) {
                                 m = value / 718;
+                                k = 1 - 0.1 * m * 2;
+                                l = 1 - 0.1 * m;
+                            }
+                            if (k < 0 || l < 0) {
+                                k = Math.abs(k);
+                                l = Math.abs(l);
                             }
                             if (Color.hsb(value, 1, 1).getRed() == Color.RED.getRed())
                                 pixelWriter.setColor(x1 + i, y1 + j, Color.BROWN);
-                            pixelWriter.setColor(x1 + i, y1 + j, Color.hsb(value, 1 - 0.1 * m * 2, 1 - 0.1 * m));
+                            pixelWriter.setColor(x1 + i, y1 + j, Color.hsb(value, k, l));
                         } else pixelWriter.setColor(x1 + i, y1 + j, Color.WHITE);
                         if (i == 0 || j == 0 || i == mnozh - 1 || j == mnozh - 1)
                             pixelWriter.setColor(x1 + i, y1 + j, Color.BLACK);
