@@ -11,13 +11,13 @@
 
 <AnchorPane fx:id="primaryStage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.percolation.gui.controller.Controller">
    <children>
-      <Button fx:id="play" mnemonicParsing="false" onMouseClicked="#GenerateRun" text="PLAY" />
-      <Button fx:id="stop" layoutX="154.0" mnemonicParsing="false" text="CLEAR" />
-      <Button fx:id="data" layoutX="317.0" mnemonicParsing="false" onMouseClicked="#ImportFile" text="DATA" />
+      <Button fx:id="play" layoutX="281.0" mnemonicParsing="false" prefWidth="154.0" onMouseClicked="#GenerateRun" text="PLAY" />
+      <Button fx:id="stop" layoutX="435.0" mnemonicParsing="false" prefWidth="163.0" text="CLEAR" />
+      <Button fx:id="data" layoutX="598.0" mnemonicParsing="false" prefWidth="163.0" onMouseClicked="#ImportFile" text="DATA" />
       <Button fx:id="chess" layoutY="192.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Шахматы" />
       <Button fx:id="circles" layoutY="222.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Круги" />
       <Button fx:id="krest" layoutY="253.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Мальтийский крест" />
-      <Button fx:id="horpol" layoutY="284.0" mnemonicParsing="false" text="Горизонтальные полосы" />
+      <Button fx:id="horpol" layoutY="284.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Горизонтальные полосы" />
       <Button fx:id="verpol" layoutY="315.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Вертикальные полосы" />
       <Button fx:id="rain" layoutY="346.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Дождь" />
       <Button fx:id="htest" layoutY="377.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Н тест" />

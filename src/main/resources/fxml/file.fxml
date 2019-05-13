@@ -6,10 +6,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.percolation.gui.controller.ControllerFile">
+<AnchorPane prefHeight="210.0" prefWidth="348.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.percolation.gui.controller.ControllerFile">
    <children>
-      <CheckBox fx:id="CB" layoutX="26.0" layoutY="30.0" mnemonicParsing="false" text="Статистика черных клеток матрицы" />
-      <Button fx:id="OK" layoutX="407.0" layoutY="258.0" mnemonicParsing="false" text="ОК" />
+      <CheckBox fx:id="BCM" layoutX="26.0" layoutY="30.0" mnemonicParsing="false" text="Статистика черных клеток матрицы" />
+      <Button fx:id="OK" layoutX="117.0" layoutY="150.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="116.0" text="ОК" />
+      <CheckBox fx:id="SWM" layoutX="26.0" layoutY="66.0" mnemonicParsing="false" text="Статистика кратчайших путей матрицы" />
+      <CheckBox fx:id="CM" layoutX="26.0" layoutY="103.0" mnemonicParsing="false" text="Статистика кластеров матрицы" />
    </children>
 </AnchorPane>

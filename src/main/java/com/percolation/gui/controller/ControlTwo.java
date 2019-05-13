@@ -36,18 +36,12 @@ public class ControlTwo {
     TextField MatP = new TextField();
     Label exp = new Label();
     Label P = new Label();
-    ComboBox ComP = new ComboBox();
-    ObservableList<String> var1 =
-            FXCollections.observableArrayList(
-                    "Вертикальный", "Горизонтальный"
-            );
 
     @FXML
     public void AddVar() {
         if (Zapol.getValue() == "Детерминированное распределение") {
             Param.getChildren().remove(MatP);
             Param.getChildren().remove(P);
-            Param.getChildren().remove(ComP);
             Param.getChildren().remove(exp);
             Param.getChildren().remove(MatT);
             exp.setText("Количество экспериментов:");
@@ -67,7 +61,6 @@ public class ControlTwo {
             Param.getChildren().remove(MatT);
             Param.getChildren().remove(MatP);
             Param.getChildren().remove(P);
-            Param.getChildren().remove(ComP);
             P.setText("Максимальная вероятность P:");
             P.setLayoutX(25.0);
             P.setLayoutY(197.0);
@@ -85,22 +78,13 @@ public class ControlTwo {
             Param.getChildren().remove(P);
             Param.getChildren().remove(exp);
             Param.getChildren().remove(MatT);
-            Param.getChildren().remove(ComP);
-            P.setText("Тип заполнения матрицы:");
-            ComP.setItems(var1);
-            ComP.setPrefSize(187.0, 31.0);
-            ComP.setLayoutX(245.0);
-            ComP.setLayoutY(137.0);
-            P.setLayoutX(25.0);
-            P.setLayoutY(142.0);
-            Param.getChildren().addAll(ComP, P);
+
         }
         if (Zapol.getValue() == "Равномерное распределение") {
             Param.getChildren().remove(exp);
             Param.getChildren().remove(MatT);
             Param.getChildren().remove(MatP);
             Param.getChildren().remove(P);
-            Param.getChildren().remove(ComP);
             P.setText("Вероятность P:");
             P.setLayoutX(25.0);
             P.setLayoutY(197.0);
@@ -128,13 +112,8 @@ public class ControlTwo {
             public void handle(MouseEvent mouseEvent) {
                 Nint = Integer.parseInt(MatN.getText());
                 if (Zapol.getValue() == "Градиент Мостового") {
-                    if (ComP.getValue() == "Горизонтальный") {
-                        Pint = 1;
-                        Tint = 1;
-                    } else {
-                        Pint = -1;
-                        Tint = 1;
-                    }
+                    Pint = 1;
+                    Tint = 1;
                 } else {
                     Tint = Integer.parseInt(MatT.getText());
                     Pint = Float.parseFloat(MatP.getText());
@@ -156,7 +135,6 @@ public class ControlTwo {
             public void handle(MouseEvent mouseEvent) {
                 Param.getChildren().remove(MatP);
                 Param.getChildren().remove(P);
-                Param.getChildren().remove(ComP);
                 Param.getChildren().remove(exp);
                 Param.getChildren().remove(MatT);
                 MatN.clear();

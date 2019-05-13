@@ -29,9 +29,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Kirill Galanov
@@ -106,53 +104,54 @@ public class Controller {
         scenetwo.setOnHiding(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent we) {
-                if (Matr.get(0).getGeneratorType() == MatrixGeneratorType.UNIFORM) {
-                    if (UniM == null) {
-                        UniB.setText("Детерминированное распределение");
-                        UniB.setLayoutY(LY);
-                        LY = LY + 52.0;
-                        UniB.setPrefWidth(190.0);
-                        UniB.setWrapText(true);
-                        primaryStage.getChildren().addAll(UniB);
+                if (Matr != null) {
+                    if (Matr.get(0).getGeneratorType() == MatrixGeneratorType.UNIFORM) {
+                        if (UniM == null) {
+                            UniB.setText("Детерминированное распределение");
+                            UniB.setLayoutY(LY);
+                            LY = LY + 52.0;
+                            UniB.setPrefWidth(190.0);
+                            UniB.setWrapText(true);
+                            primaryStage.getChildren().addAll(UniB);
+                        }
+                        UniM = Matr;
                     }
-                    UniM = Matr;
-                    System.out.println(UniM.size());
-                }
-                if (Matr.get(0).getGeneratorType() == MatrixGeneratorType.GRADIENT) {
-                    if (GradM == null) {
-                        GradB.setText("Градиент");
-                        GradB.setLayoutY(LY);
-                        LY = LY + 31.0;
-                        GradB.setPrefWidth(190.0);
-                        GradB.setWrapText(true);
-                        primaryStage.getChildren().addAll(GradB);
+                    if (Matr.get(0).getGeneratorType() == MatrixGeneratorType.GRADIENT) {
+                        if (GradM == null) {
+                            GradB.setText("Градиент");
+                            GradB.setLayoutY(LY);
+                            LY = LY + 31.0;
+                            GradB.setPrefWidth(190.0);
+                            GradB.setWrapText(true);
+                            primaryStage.getChildren().addAll(GradB);
+                        }
+                        GradM = Matr;
                     }
-                    GradM = Matr;
-                }
-                if (Matr.get(0).getGeneratorType() == MatrixGeneratorType.MOSTOVOY_GRADIENT) {
-                    if (MGradM == null) {
-                        MGradB.setText("Градиент Мостового");
-                        MGradB.setLayoutY(LY);
-                        LY = LY + 31.0;
-                        MGradB.setPrefWidth(190.0);
-                        MGradB.setWrapText(true);
-                        primaryStage.getChildren().addAll(MGradB);
+                    if (Matr.get(0).getGeneratorType() == MatrixGeneratorType.MOSTOVOY_GRADIENT) {
+                        if (MGradM == null) {
+                            MGradB.setText("Градиент Мостового");
+                            MGradB.setLayoutY(LY);
+                            LY = LY + 31.0;
+                            MGradB.setPrefWidth(190.0);
+                            MGradB.setWrapText(true);
+                            primaryStage.getChildren().addAll(MGradB);
+                        }
+                        MGradM = Matr;
                     }
-                    MGradM = Matr;
-                }
-                if (Matr.get(0).getGeneratorType() == MatrixGeneratorType.UNIFORM_DISTRIBUTION) {
-                    if (UniDM == null) {
-                        UniDB.setText("Равномерное распределение");
-                        UniDB.setLayoutY(LY);
-                        LY = LY + 52.0;
-                        UniDB.setPrefWidth(190.0);
-                        UniDB.setWrapText(true);
-                        primaryStage.getChildren().addAll(UniDB);
+                    if (Matr.get(0).getGeneratorType() == MatrixGeneratorType.UNIFORM_DISTRIBUTION) {
+                        if (UniDM == null) {
+                            UniDB.setText("Равномерное распределение");
+                            UniDB.setLayoutY(LY);
+                            LY = LY + 52.0;
+                            UniDB.setPrefWidth(190.0);
+                            UniDB.setWrapText(true);
+                            primaryStage.getChildren().addAll(UniDB);
+                        }
+                        UniDM = Matr;
                     }
-                    UniDM = Matr;
+                    if (UniM != null || GradM != null || MGradM != null || UniDM != null)
+                        data.setDisable(false);
                 }
-                if (UniM != null || GradM != null || MGradM != null || UniDM != null)
-                    data.setDisable(false);
             }
         });
     }
@@ -160,17 +159,25 @@ public class Controller {
     private Image createColorScaleImage(Matrix matr, int width, int height, int mnozh, boolean bway) throws CloneNotSupportedException {
         WritableImage image = new WritableImage(width * mnozh, height * mnozh);
         PixelWriter pixelWriter = image.getPixelWriter();
+        ;
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 x1 = x * mnozh;
                 y1 = y * mnozh;
+                int r = 359;
+                int m = 0;
                 for (int i = 0; i < mnozh; i++) {
                     for (int j = 0; j < mnozh; j++) {
                         if (matr.getCellValue(x, y).getHumanReadableValue() == 1) {
-                            double value = matr.getCellValue(x, y).getClusterId() * 30;
-                            if (Color.hsb(value, 1, 1) == Color.RED)
+                            int value = matr.getCellValue(x, y).getClusterId();
+                            if (matr.getClusters().size() < 30)
+                                value = value * 30;
+                            if (value > r) {
+                                m = value / 718;
+                            }
+                            if (Color.hsb(value, 1, 1).getRed() == Color.RED.getRed())
                                 pixelWriter.setColor(x1 + i, y1 + j, Color.BROWN);
-                            pixelWriter.setColor(x1 + i, y1 + j, Color.hsb(value, 1, 1));
+                            pixelWriter.setColor(x1 + i, y1 + j, Color.hsb(value, 1 - 0.1 * m * 2, 1 - 0.1 * m));
                         } else pixelWriter.setColor(x1 + i, y1 + j, Color.WHITE);
                         if (i == 0 || j == 0 || i == mnozh - 1 || j == mnozh - 1)
                             pixelWriter.setColor(x1 + i, y1 + j, Color.BLACK);
@@ -180,7 +187,7 @@ public class Controller {
         }
         if (bway == true) {
             put = MatrixService.getInstance().getShortestWayMatrix(matr);
-            System.out.println(put.getWayArray().size());
+            System.out.println(put.getLengthWay());
             int x, y;
             for (Cell cell : put.getWayArray()) {
                 x = cell.getX();
@@ -265,8 +272,8 @@ public class Controller {
         chess.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way = new Button();
                 primaryStage.getChildren().remove(way);
+                way = new Button();
                 way.setText("Проложить путь");
                 way.setLayoutX(380.0);
                 way.setLayoutY(140.0);
@@ -293,8 +300,8 @@ public class Controller {
         circles.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way = new Button();
                 primaryStage.getChildren().remove(way);
+                way = new Button();
                 way.setText("Проложить путь");
                 way.setLayoutX(380.0);
                 way.setLayoutY(140.0);
@@ -321,8 +328,8 @@ public class Controller {
         krest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way = new Button();
                 primaryStage.getChildren().remove(way);
+                way = new Button();
                 way.setText("Проложить путь");
                 way.setLayoutX(380.0);
                 way.setLayoutY(140.0);
@@ -338,7 +345,8 @@ public class Controller {
                     @Override
                     public void handle(MouseEvent event) {
                         try {
-                            printMatrix(TestM.get(2), true);;
+                            printMatrix(TestM.get(2), true);
+                            ;
                         } catch (CloneNotSupportedException e) {
                             e.printStackTrace();
                         }
@@ -349,8 +357,8 @@ public class Controller {
         horpol.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way = new Button();
                 primaryStage.getChildren().remove(way);
+                way = new Button();
                 way.setText("Проложить путь");
                 way.setLayoutX(380.0);
                 way.setLayoutY(140.0);
@@ -366,7 +374,8 @@ public class Controller {
                     @Override
                     public void handle(MouseEvent event) {
                         try {
-                            printMatrix(TestM.get(3), true);;
+                            printMatrix(TestM.get(3), true);
+                            ;
                         } catch (CloneNotSupportedException e) {
                             e.printStackTrace();
                         }
@@ -377,8 +386,8 @@ public class Controller {
         verpol.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way = new Button();
                 primaryStage.getChildren().remove(way);
+                way = new Button();
                 way.setText("Проложить путь");
                 way.setLayoutX(380.0);
                 way.setLayoutY(140.0);
@@ -405,8 +414,8 @@ public class Controller {
         rain.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way = new Button();
                 primaryStage.getChildren().remove(way);
+                way = new Button();
                 way.setText("Проложить путь");
                 way.setLayoutX(380.0);
                 way.setLayoutY(140.0);
@@ -433,8 +442,8 @@ public class Controller {
         htest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                way = new Button();
                 primaryStage.getChildren().remove(way);
+                way = new Button();
                 way.setText("Проложить путь");
                 way.setLayoutX(380.0);
                 way.setLayoutY(140.0);
@@ -475,8 +484,8 @@ public class Controller {
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            way = new Button();
                             primaryStage.getChildren().remove(way);
+                            way = new Button();
                             way.setText("Проложить путь");
                             way.setLayoutX(380.0);
                             way.setLayoutY(140.0);
@@ -520,8 +529,8 @@ public class Controller {
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            way = new Button();
                             primaryStage.getChildren().remove(way);
+                            way = new Button();
                             way.setText("Проложить путь");
                             way.setLayoutX(380.0);
                             way.setLayoutY(140.0);
@@ -565,8 +574,8 @@ public class Controller {
                     matrix[i].addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            way = new Button();
                             primaryStage.getChildren().remove(way);
+                            way = new Button();
                             way.setText("Проложить путь");
                             way.setLayoutX(380.0);
                             way.setLayoutY(140.0);
@@ -615,8 +624,8 @@ public class Controller {
                             } catch (CloneNotSupportedException e) {
                                 e.printStackTrace();
                             }
-                            way = new Button();
                             primaryStage.getChildren().remove(way);
+                            way = new Button();
                             way.setText("Проложить путь");
                             way.setLayoutX(380.0);
                             way.setLayoutY(140.0);

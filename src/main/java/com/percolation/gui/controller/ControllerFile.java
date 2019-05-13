@@ -22,17 +22,23 @@ public class ControllerFile {
 
     @FXML
     public Button OK;
-    public CheckBox CB;
+    public CheckBox BCM;
+    public CheckBox SWM;
+    public CheckBox CM;
 
     @FXML
     public void initialize() {
         OK.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (CB.isSelected() == true) {
-                    matr = Controller.getInstance().getMatr();
+                matr = Controller.getInstance().getMatr();
+                if (BCM.isSelected() == true) {
                     MatrixService.getInstance().calculateMatrixBlackHoleStatistic(matr, true);
                 }
+                if (SWM.isSelected() == true)
+                    MatrixService.getInstance().writeMatrixWayStatisticToFile(matr.get(0).getN());
+                if (CM.isSelected() == true)
+                    MatrixService.getInstance().getClusterStatistic(matr);
                 Stage stage = (Stage) OK.getScene().getWindow();
                 stage.close();
             }
