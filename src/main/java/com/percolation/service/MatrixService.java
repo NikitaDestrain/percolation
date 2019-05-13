@@ -135,9 +135,11 @@ public class MatrixService {
     public Way getShortestWayMatrix(Matrix matrix) throws CloneNotSupportedException {
         dejkstraDetection.setMatrix(matrix);
         dejkstraDetection.setupDejkstra();
+
         return dejkstraDetection.getShortestWay();
     }
 
+    @Deprecated
     public String writeMatrixWayStatisticToFile(int matrixSize) {
         return ioUtils.writeMatrixWayStatisticsToCSV(dejkstraDetection.getWayStatistics(), matrixSize);
     }

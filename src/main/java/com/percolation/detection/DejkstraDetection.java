@@ -7,7 +7,9 @@ import com.percolation.domain.statistic.WayLighningStatistic;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Dmitryi Vasilev
+ */
 public class DejkstraDetection {
     private static DejkstraDetection instance;
     private String LEFT_SIDE = "LEFTSIDE";
@@ -57,7 +59,6 @@ public class DejkstraDetection {
         Cell right = this.matrix.getCellValue(cell.getX() + 1, cell.getY());
         Cell bottom = this.matrix.getCellValue(cell.getX(), cell.getY() + 1);
 
-
         if (right != null && right != prev) {
 
             if (right.getCluster() != null) {
@@ -68,11 +69,8 @@ public class DejkstraDetection {
                 } else {
                     right.setDejkstraValue(cell.getDejkstraValue() + 1);
                     processDejkstra(right, cell);
-
-
                 }
             } else {
-
                 if (right.getDejkstraValue() > cell.getDejkstraValue() + matrix.getN()) {
                     right.setDejkstraValue(cell.getDejkstraValue() + matrix.getN());
                     processDejkstra(right, cell);
@@ -81,7 +79,6 @@ public class DejkstraDetection {
         }
 
         if (left != null && left != prev) {
-
             if (left.getCluster() != null) {
                 if (cell.getCluster() == null && cell.getDejkstraValue() + 1 < left.getDejkstraValue()) {
                     left.setDejkstraValue(cell.getDejkstraValue() + 1);
@@ -101,8 +98,6 @@ public class DejkstraDetection {
         }
 
         if (bottom != null && bottom != prev) {
-
-
             if (bottom.getCluster() != null) {
                 if (cell.getCluster() == null && cell.getDejkstraValue() + 1 < bottom.getDejkstraValue()) {
                     bottom.setDejkstraValue(cell.getDejkstraValue() + 1);
@@ -119,8 +114,6 @@ public class DejkstraDetection {
                 }
             }
         }
-
-
     }
 
     public void setupDejkstra() throws CloneNotSupportedException {
@@ -187,9 +180,7 @@ public class DejkstraDetection {
         way.addCell(cell);
         rec(cell, way);
 
-
         sizeHole(way);
-
     }
 
     private void rec(Cell cell, Way way) throws CloneNotSupportedException {
@@ -218,14 +209,17 @@ public class DejkstraDetection {
                 break;
             }
             if (left != null && right != null && left.getDejkstraValue() == right.getDejkstraValue() && left.getDejkstraValue() == min) {
+                way.addCell(cell);
                 rec(left, way.clone());
                 rec(right, way.clone());
             }
             if (left != null && top != null && left.getDejkstraValue() == top.getDejkstraValue() && top.getDejkstraValue() == min) {
+                way.addCell(cell);
                 rec(left, way.clone());
                 rec(top, way.clone());
             }
             if (top != null && right != null && top.getDejkstraValue() == right.getDejkstraValue() && right.getDejkstraValue() == min) {
+                way.addCell(cell);
                 rec(top, way.clone());
                 rec(right, way.clone());
             }
@@ -235,7 +229,7 @@ public class DejkstraDetection {
 
             if (cell.getCluster() == null)
                 way.setRedCell(way.getRedCell() + 1);
-            if (!flag)
+             if (!flag)
                 way.addCell(cell);
 
         }
@@ -243,7 +237,6 @@ public class DejkstraDetection {
             ways.add(way);
         flag = true;
     }
-
 
     private void sizeHole(Way way) {
         int max = 0;
@@ -270,13 +263,10 @@ public class DejkstraDetection {
 
     private double getAverageWay() {
         double average = 0;
-        for (Way way : waysShortest
-        ) {
+        for (Way way : waysShortest) {
             average += way.getLengthWay();
         }
         return (average / waysShortest.size());
     }
-
-
 }
 
