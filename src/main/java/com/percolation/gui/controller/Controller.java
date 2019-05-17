@@ -195,7 +195,6 @@ public class Controller {
         }
         if (bway == true) {
             put = MatrixService.getInstance().getShortestWayMatrix(matr);
-            System.out.println(put.getLengthWay());
             int x, y;
             for (Cell cell : put.getWayArray()) {
                 x = cell.getX();

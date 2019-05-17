@@ -1,5 +1,6 @@
 package com.percolation.detection;
 
+import com.percolation.WayCell;
 import com.percolation.domain.Way;
 import com.percolation.domain.matrix.Cell;
 import com.percolation.domain.matrix.Matrix;
@@ -7,6 +8,8 @@ import com.percolation.domain.statistic.WayLighningStatistic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
+
 /**
  * @author Dmitryi Vasilev
  */
@@ -49,12 +52,12 @@ public class DejkstraDetection {
                 if (cel.getCluster() != null)
                     cel.setDejkstraValue(1);
                 else
-                    cel.setDejkstraValue(Integer.MAX_VALUE / 2);
+                    cel.setDejkstraValue(this.matrix.getN()*this.matrix.getN()+1);
             }
         }
     }
 
-    public void processDejkstra(Cell cell, Cell prev) {
+       public void processDejkstra(Cell cell, Cell prev) {
         Cell left = this.matrix.getCellValue(cell.getX() - 1, cell.getY());
         Cell right = this.matrix.getCellValue(cell.getX() + 1, cell.getY());
         Cell bottom = this.matrix.getCellValue(cell.getX(), cell.getY() + 1);
@@ -115,6 +118,47 @@ public class DejkstraDetection {
             }
         }
     }
+//    public void processDejkstra(Matrix matrix) {
+//        PriorityQueue<WayCell> wayCells = new PriorityQueue<>();
+//        int l = matrix.getN() * matrix.getN() + 1;
+//        WayCell way = new WayCell();
+//        way.setCellPrev(null);
+//        way.setCellCurrent(matrix.getCellValue(0, 0));
+//        matrix.getCellValue(0,0).setDejkstraValue(0);
+//        wayCells.add(way);
+//        while (!wayCells.isEmpty()) {
+//            Cell cellCurrent = wayCells.poll().getCellCurrent();
+//            Cell right = matrix.getCellValue(cellCurrent.getX() + 1, cellCurrent.getY());
+//            Cell left = matrix.getCellValue(cellCurrent.getX() - 1, cellCurrent.getY());
+//            Cell bottom = matrix.getCellValue(cellCurrent.getX(), cellCurrent.getY() + 1);
+//            ArrayList<Cell> neighbour = new ArrayList<>(3);
+//            if (right != null)
+//                neighbour.add(right);
+//            if (left != null)
+//                neighbour.add(left);
+//            if (bottom != null)
+//                neighbour.add(bottom);
+//            for (Cell cell : neighbour) {
+//                if (!cell.isFlag()) {
+//                    WayCell wC = new WayCell();
+//                    wC.setCellCurrent(cell);
+//                    wC.setCellPrev(cellCurrent);
+//                    double newDist = cellCurrent.getDejkstraValue()
+//                            + (cell.getCluster() == null ? l : 1);
+//                    if (newDist <= cell.getDejkstraValue()) {
+//                        WayCell wayCell = new WayCell();
+//                        wayCells.remove(wC);
+//                        cell.setDejkstraValue((int) newDist);
+//                        wayCell.setCellCurrent(cell);
+//                        wayCell.setCellPrev(cellCurrent);
+//                        wayCells.add(wayCell);
+//                    }
+//                }
+//            }
+//            cellCurrent.setFlag(true);
+//        }
+//
+//    }
 
     public void setupDejkstra() throws CloneNotSupportedException {
         if (ways != null)
@@ -229,7 +273,7 @@ public class DejkstraDetection {
 
             if (cell.getCluster() == null)
                 way.setRedCell(way.getRedCell() + 1);
-             if (!flag)
+            if (!flag)
                 way.addCell(cell);
 
         }

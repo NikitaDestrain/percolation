@@ -12,6 +12,7 @@ public class Cell {
     private int dejkstraValue;
     private int x;
     private int y;
+    private boolean flag = false;
 
     public int getDejkstraValue() {
         return dejkstraValue;
