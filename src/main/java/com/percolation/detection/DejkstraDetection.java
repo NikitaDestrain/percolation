@@ -1,6 +1,5 @@
 package com.percolation.detection;
 
-import com.percolation.WayCell;
 import com.percolation.domain.Way;
 import com.percolation.domain.matrix.Cell;
 import com.percolation.domain.matrix.Matrix;
@@ -52,113 +51,111 @@ public class DejkstraDetection {
                 if (cel.getCluster() != null)
                     cel.setDejkstraValue(1);
                 else
-                    cel.setDejkstraValue(this.matrix.getN()*this.matrix.getN()+1);
+                    cel.setDejkstraValue(matrix.getN() * matrix.getN() + 1);
+                cel.setDist(Integer.MAX_VALUE);
+                cel.setVisited(false);
             }
         }
     }
 
-       public void processDejkstra(Cell cell, Cell prev) {
-        Cell left = this.matrix.getCellValue(cell.getX() - 1, cell.getY());
-        Cell right = this.matrix.getCellValue(cell.getX() + 1, cell.getY());
-        Cell bottom = this.matrix.getCellValue(cell.getX(), cell.getY() + 1);
-
-        if (right != null && right != prev) {
-
-            if (right.getCluster() != null) {
-                if (cell.getCluster() == null && cell.getDejkstraValue() + 1 < right.getDejkstraValue()) {
-                    right.setDejkstraValue(cell.getDejkstraValue() + 1);
-                    processDejkstra(right, cell);
-
-                } else {
-                    right.setDejkstraValue(cell.getDejkstraValue() + 1);
-                    processDejkstra(right, cell);
-                }
-            } else {
-                if (right.getDejkstraValue() > cell.getDejkstraValue() + matrix.getN()) {
-                    right.setDejkstraValue(cell.getDejkstraValue() + matrix.getN());
-                    processDejkstra(right, cell);
-                }
-            }
-        }
-
-        if (left != null && left != prev) {
-            if (left.getCluster() != null) {
-                if (cell.getCluster() == null && cell.getDejkstraValue() + 1 < left.getDejkstraValue()) {
-                    left.setDejkstraValue(cell.getDejkstraValue() + 1);
-                    processDejkstra(left, cell);
-                } else {
-                    left.setDejkstraValue(cell.getDejkstraValue() + 1);
-                    processDejkstra(left, cell);
-
-                }
-            } else {
-                if (left.getDejkstraValue() > cell.getDejkstraValue() + matrix.getN()) {
-                    left.setDejkstraValue(cell.getDejkstraValue() + matrix.getN());
-                    processDejkstra(left, cell);
-                }
-            }
-
-        }
-
-        if (bottom != null && bottom != prev) {
-            if (bottom.getCluster() != null) {
-                if (cell.getCluster() == null && cell.getDejkstraValue() + 1 < bottom.getDejkstraValue()) {
-                    bottom.setDejkstraValue(cell.getDejkstraValue() + 1);
-                    processDejkstra(bottom, cell);
-                } else {
-                    bottom.setDejkstraValue(cell.getDejkstraValue() + 1);
-                    processDejkstra(bottom, cell);
-
-                }
-            } else {
-                if (bottom.getDejkstraValue() > cell.getDejkstraValue() + matrix.getN()) {
-                    bottom.setDejkstraValue(cell.getDejkstraValue() + matrix.getN());
-                    processDejkstra(bottom, cell);
-                }
-            }
-        }
-    }
-//    public void processDejkstra(Matrix matrix) {
-//        PriorityQueue<WayCell> wayCells = new PriorityQueue<>();
-//        int l = matrix.getN() * matrix.getN() + 1;
-//        WayCell way = new WayCell();
-//        way.setCellPrev(null);
-//        way.setCellCurrent(matrix.getCellValue(0, 0));
-//        matrix.getCellValue(0,0).setDejkstraValue(0);
-//        wayCells.add(way);
-//        while (!wayCells.isEmpty()) {
-//            Cell cellCurrent = wayCells.poll().getCellCurrent();
-//            Cell right = matrix.getCellValue(cellCurrent.getX() + 1, cellCurrent.getY());
-//            Cell left = matrix.getCellValue(cellCurrent.getX() - 1, cellCurrent.getY());
-//            Cell bottom = matrix.getCellValue(cellCurrent.getX(), cellCurrent.getY() + 1);
-//            ArrayList<Cell> neighbour = new ArrayList<>(3);
-//            if (right != null)
-//                neighbour.add(right);
-//            if (left != null)
-//                neighbour.add(left);
-//            if (bottom != null)
-//                neighbour.add(bottom);
-//            for (Cell cell : neighbour) {
-//                if (!cell.isFlag()) {
-//                    WayCell wC = new WayCell();
-//                    wC.setCellCurrent(cell);
-//                    wC.setCellPrev(cellCurrent);
-//                    double newDist = cellCurrent.getDejkstraValue()
-//                            + (cell.getCluster() == null ? l : 1);
-//                    if (newDist <= cell.getDejkstraValue()) {
-//                        WayCell wayCell = new WayCell();
-//                        wayCells.remove(wC);
-//                        cell.setDejkstraValue((int) newDist);
-//                        wayCell.setCellCurrent(cell);
-//                        wayCell.setCellPrev(cellCurrent);
-//                        wayCells.add(wayCell);
-//                    }
+//    public void processDejkstra(Cell cell, Cell prev) {
+//        Cell left = this.matrix.getCellValue(cell.getX() - 1, cell.getY());
+//        Cell right = this.matrix.getCellValue(cell.getX() + 1, cell.getY());
+//        Cell bottom = this.matrix.getCellValue(cell.getX(), cell.getY() + 1);
+////        System.out.println(cell.getX() + "  " +cell.getY());
+////        try {
+////            Thread.sleep(500);
+////        } catch (InterruptedException e) {
+////            e.printStackTrace();
+////        }
+//        if (right != null && right != prev) {
+//
+//            if (right.getCluster() != null) {
+//                if (cell.getCluster() == null && cell.getDejkstraValue() + 1 < right.getDejkstraValue()) {
+//                    right.setDejkstraValue(cell.getDejkstraValue() + 1);
+//                    processDejkstra(right, cell);
+//
+//                } else {
+//                    right.setDejkstraValue(cell.getDejkstraValue() + 1);
+//                    processDejkstra(right, cell);
+//                }
+//            } else {
+//                if (right.getDejkstraValue() > cell.getDejkstraValue() + matrix.getN()) {
+//                    right.setDejkstraValue(cell.getDejkstraValue() + matrix.getN());
+//                    processDejkstra(right, cell);
 //                }
 //            }
-//            cellCurrent.setFlag(true);
 //        }
 //
+//        if (left != null && left != prev) {
+//            if (left.getCluster() != null) {
+//                if (cell.getCluster() == null && cell.getDejkstraValue() + 1 < left.getDejkstraValue()) {
+//                    left.setDejkstraValue(cell.getDejkstraValue() + 1);
+//                    processDejkstra(left, cell);
+//                } else {
+//                    left.setDejkstraValue(cell.getDejkstraValue() + 1);
+//                    processDejkstra(left, cell);
+//
+//                }
+//            } else {
+//                if (left.getDejkstraValue() > cell.getDejkstraValue() + matrix.getN()) {
+//                    left.setDejkstraValue(cell.getDejkstraValue() + matrix.getN());
+//                    processDejkstra(left, cell);
+//                }
+//            }
+//
+//        }
+//
+//        if (bottom != null && bottom != prev) {
+//            if (bottom.getCluster() != null) {
+//                if (cell.getCluster() == null && cell.getDejkstraValue() + 1 < bottom.getDejkstraValue()) {
+//                    bottom.setDejkstraValue(cell.getDejkstraValue() + 1);
+//                    processDejkstra(bottom, cell);
+//                } else {
+//                    bottom.setDejkstraValue(cell.getDejkstraValue() + 1);
+//                    processDejkstra(bottom, cell);
+//
+//                }
+//            } else {
+//                if (bottom.getDejkstraValue() > cell.getDejkstraValue() + matrix.getN()) {
+//                    bottom.setDejkstraValue(cell.getDejkstraValue() + matrix.getN());
+//                    processDejkstra(bottom, cell);
+//                }
+//            }
+//        }
 //    }
+
+    public void processDejkstra(Cell currentCell) {
+        PriorityQueue<Cell> queue = new PriorityQueue<>();
+        queue.add(currentCell);
+        currentCell.setVisited(true);
+        while (!queue.isEmpty()) {
+            Cell actualCell = queue.poll();
+            Cell left = this.matrix.getCellValue(actualCell.getX() - 1, actualCell.getY());
+            Cell right = this.matrix.getCellValue(actualCell.getX() + 1, actualCell.getY());
+            Cell bottom = this.matrix.getCellValue(actualCell.getX(), actualCell.getY() + 1);
+            ArrayList<Cell> list = new ArrayList<>();
+            if (left != null)
+                list.add(left);
+            if (right != null)
+                list.add(right);
+            if (bottom != null)
+                list.add(bottom);
+            for (Cell cell : list) {
+                if (!cell.isVisited()) {
+                    double newDist = actualCell.getDejkstraValue() + cell.getDejkstraValue();
+                    if (newDist < cell.getDist()) {
+                        queue.remove(actualCell);
+                        cell.setDejkstraValue((int) newDist);
+                        cell.setDist((int) newDist);
+                        queue.add(cell);
+                    }
+                }
+            }
+            actualCell.setVisited(true);
+        }
+
+    }
 
     public void setupDejkstra() throws CloneNotSupportedException {
         if (ways != null)
@@ -166,11 +163,11 @@ public class DejkstraDetection {
         for (int i = 0; i < matrix.getN(); i++) {
             setDejkstraValueToCell();
             matrix.getCellValue(i, 0).setDejkstraValue(0);
-            processDejkstra(matrix.getCellValue(i, 0), null);
+            processDejkstra(matrix.getCellValue(i, 0));
             findWay();
         }
         findShortestWay();
-        calculateWidthWay();
+        //   calculateWidthWay();
     }
 
     private void calculateWidthWay() {
@@ -200,6 +197,10 @@ public class DejkstraDetection {
             }
         }
         this.shortestWay = way;
+        for (Cell cell : way.getWayArray()) {
+            if (cell.getCluster() == null)
+                way.setRedCell(way.getRedCell() + 1);
+        }
         waysShortest.add(way);
     }
 
@@ -222,21 +223,10 @@ public class DejkstraDetection {
         }
         way.setLengthWay(min);
         way.addCell(cell);
-        rec(cell, way);
-
-        sizeHole(way);
-    }
-
-    private void rec(Cell cell, Way way) throws CloneNotSupportedException {
-        int min = Integer.MAX_VALUE / 2;
-        if (flag)
-            return;
-        while (cell.getDejkstraValue() != 0 && !flag) {
+        while (cell.getY() != 0) {
             Cell left = this.matrix.getCellValue(cell.getX() - 1, cell.getY());
             Cell right = this.matrix.getCellValue(cell.getX() + 1, cell.getY());
             Cell top = this.matrix.getCellValue(cell.getX(), cell.getY() - 1);
-
-
             if (left != null && left.getDejkstraValue() < min) {
                 min = left.getDejkstraValue();
                 cell = left;
@@ -249,38 +239,15 @@ public class DejkstraDetection {
                 min = top.getDejkstraValue();
                 cell = top;
             }
-            if (min == Integer.MAX_VALUE / 2) {
-                break;
-            }
-            if (left != null && right != null && left.getDejkstraValue() == right.getDejkstraValue() && left.getDejkstraValue() == min) {
-                way.addCell(cell);
-                rec(left, way.clone());
-                rec(right, way.clone());
-            }
-            if (left != null && top != null && left.getDejkstraValue() == top.getDejkstraValue() && top.getDejkstraValue() == min) {
-                way.addCell(cell);
-                rec(left, way.clone());
-                rec(top, way.clone());
-            }
-            if (top != null && right != null && top.getDejkstraValue() == right.getDejkstraValue() && right.getDejkstraValue() == min) {
-                way.addCell(cell);
-                rec(top, way.clone());
-                rec(right, way.clone());
-            }
-
-            if (way.getWayArray().contains(cell))
-                break;
-
-            if (cell.getCluster() == null)
-                way.setRedCell(way.getRedCell() + 1);
-            if (!flag)
-                way.addCell(cell);
+            way.addCell(cell);
 
         }
-        if (!flag)
-            ways.add(way);
-        flag = true;
+
+        ways.add(way);
+
+        sizeHole(way);
     }
+
 
     private void sizeHole(Way way) {
         int max = 0;
