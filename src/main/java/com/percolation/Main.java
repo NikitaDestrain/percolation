@@ -1,4 +1,4 @@
-package com.percolation.gui;
+package com.percolation;
 
 import com.percolation.service.MatrixService;
 import javafx.application.Application;
