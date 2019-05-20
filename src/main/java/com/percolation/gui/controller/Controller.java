@@ -32,6 +32,9 @@ import java.io.IOException;
 import java.util.*;
 
 /**
+ * Создает окно основного меню, описывает все методы для кнопок и вызова основных методов для построения
+ * тестовых матриц, генерации матриц по заданию и прокладки пути. Описывает методы вызова дополнительных окон для
+ * введения данных для генерации и выбора экспорта различных видов статистики
  * @author Kirill Galanov
  */
 public class Controller {
@@ -159,33 +162,16 @@ public class Controller {
     private Image createColorScaleImage(Matrix matr, int width, int height, int mnozh, boolean bway) throws CloneNotSupportedException {
         WritableImage image = new WritableImage(width * mnozh, height * mnozh);
         PixelWriter pixelWriter = image.getPixelWriter();
-        ;
+        int g = matr.getAllClusters().size();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 x1 = x * mnozh;
                 y1 = y * mnozh;
-                int r = 359;
-                int m = 0;
-                double k = 1;
-                double l = 1;
+                int value = matr.getCellValue(x, y).getClusterId() * 15;
                 for (int i = 0; i < mnozh; i++) {
                     for (int j = 0; j < mnozh; j++) {
                         if (matr.getCellValue(x, y).getHumanReadableValue() == 1) {
-                            int value = matr.getCellValue(x, y).getClusterId();
-                            if (matr.getClusters().size() < 30)
-                                value = value * 25;
-                            if (value > r) {
-                                m = value / 718;
-                                k = 1 - 0.1 * m * 2;
-                                l = 1 - 0.1 * m;
-                            }
-                            if (k < 0 || l < 0) {
-                                k = Math.abs(k);
-                                l = Math.abs(l);
-                            }
-                            if (Color.hsb(value, 1, 1).getRed() == Color.RED.getRed())
-                                pixelWriter.setColor(x1 + i, y1 + j, Color.BROWN);
-                            pixelWriter.setColor(x1 + i, y1 + j, Color.hsb(value, k, l));
+                            pixelWriter.setColor(x1 + i, y1 + j, Color.hsb(value, 0.8, 1));
                         } else pixelWriter.setColor(x1 + i, y1 + j, Color.WHITE);
                         if (i == 0 || j == 0 || i == mnozh - 1 || j == mnozh - 1)
                             pixelWriter.setColor(x1 + i, y1 + j, Color.BLACK);
@@ -204,8 +190,8 @@ public class Controller {
                 for (int i = 0; i < mnozh; i++) {
                     for (int j = 0; j < mnozh; j++) {
                         if (matr.getCellValue(x, y).getHumanReadableValue() == 1) {
-                            pixelWriter.setColor(x1 + i, y1 + j, Color.RED);
-                        } else pixelWriter.setColor(x1 + i, y1 + j, Color.PINK);
+                            pixelWriter.setColor(x1 + i, y1 + j, Color.DARKRED);
+                        } else pixelWriter.setColor(x1 + i, y1 + j, Color.RED);
                         if (i == 0 || j == 0 || i == mnozh - 1 || j == mnozh - 1)
                             pixelWriter.setColor(x1 + i, y1 + j, Color.BLACK);
                     }
@@ -250,7 +236,7 @@ public class Controller {
         else perc.setText("Перколяции нет");
         size.setText("Размер: " + Integer.toString(matr.getN()) + "х" + Integer.toString(matr.getN()));
         blkpnt.setText("Количество 'черных' точек: " + Integer.toString(matr.getBlackCellCount()));
-        Pvalue.setText("Вероятность: " + Double.toString(matr.getP()));
+        Pvalue.setText("Вероятность: " + String.format("%.3f", matr.getP()));
         primaryStage.getChildren().remove(imgcon);
         imgcon.getChildren().remove(imageView);
         Image colorScale = createColorScaleImage(matr, matr.getN(), matr.getN(), 11, bway);

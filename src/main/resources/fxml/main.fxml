@@ -11,9 +11,9 @@
 
 <AnchorPane fx:id="primaryStage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.percolation.gui.controller.Controller">
    <children>
-      <Button fx:id="play" layoutX="281.0" mnemonicParsing="false" prefWidth="154.0" onMouseClicked="#GenerateRun" text="PLAY" />
+      <Button fx:id="play" layoutX="281.0" mnemonicParsing="false" onMouseClicked="#GenerateRun" prefWidth="154.0" text="PLAY" />
       <Button fx:id="stop" layoutX="435.0" mnemonicParsing="false" prefWidth="163.0" text="CLEAR" />
-      <Button fx:id="data" layoutX="598.0" mnemonicParsing="false" prefWidth="163.0" onMouseClicked="#ImportFile" text="DATA" />
+      <Button fx:id="data" layoutX="598.0" mnemonicParsing="false" onMouseClicked="#ImportFile" prefWidth="163.0" text="DATA" />
       <Button fx:id="chess" layoutY="192.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Шахматы" />
       <Button fx:id="circles" layoutY="222.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Круги" />
       <Button fx:id="krest" layoutY="253.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Мальтийский крест" />
@@ -30,9 +30,9 @@
             <StackPane fx:id="imgcon" prefHeight="581.0" prefWidth="562.0" />
          </content>
       </ScrollPane>
-      <Label fx:id="perc" layoutX="380.0" layoutY="171.0" text="Перколяция:" />
-      <Label fx:id="size" layoutX="499.0" layoutY="171.0" text="Размер:" />
-      <Label fx:id="blkpnt" layoutX="600.0" layoutY="171.0" text="Количество &quot;черных&quot; точек: " />
-      <Label fx:id="Pvalue" layoutX="831.0" layoutY="171.0" text="Вероятность:" />
+      <Label fx:id="perc" layoutX="581.0" layoutY="171.0" text="Перколяция:" />
+      <Label fx:id="size" layoutX="580.0" layoutY="108.0" text="Размер:" />
+      <Label fx:id="blkpnt" layoutX="582.0" layoutY="150.0" text="Количество &quot;черных&quot; точек: " />
+      <Label fx:id="Pvalue" layoutX="580.0" layoutY="129.0" text="Вероятность:" />
    </children>
 </AnchorPane>
