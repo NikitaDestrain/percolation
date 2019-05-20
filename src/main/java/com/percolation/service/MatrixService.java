@@ -139,8 +139,12 @@ public class MatrixService {
         return dejkstraDetection.getShortestWay();
     }
 
-    @Deprecated
-    public String writeMatrixWayStatisticToFile(int matrixSize) {
+    public String writeMatrixWayStatisticToFile(int matrixSize, List<Matrix> matrices) throws CloneNotSupportedException {
+        dejkstraDetection.clear();
+        for (Matrix matrix : matrices) {
+            dejkstraDetection.setMatrix(matrix);
+            dejkstraDetection.setupDejkstra();
+        }
         return ioUtils.writeMatrixWayStatisticsToCSV(dejkstraDetection.getWayStatistics(), matrixSize);
     }
 

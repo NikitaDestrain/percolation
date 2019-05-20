@@ -37,8 +37,13 @@ public class ControllerFile {
                 if (BCM.isSelected() == true) {
                     MatrixService.getInstance().calculateMatrixBlackHoleStatistic(matr, true);
                 }
-                if (SWM.isSelected() == true)
-                    MatrixService.getInstance().writeMatrixWayStatisticToFile(matr.get(0).getN());
+                if (SWM.isSelected() == true) {
+                    try {
+                        MatrixService.getInstance().writeMatrixWayStatisticToFile(matr.get(0).getN(),matr);
+                    } catch (CloneNotSupportedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 if (CM.isSelected() == true)
                     MatrixService.getInstance().getClusterStatistic(matr);
                 Stage stage = (Stage) OK.getScene().getWindow();

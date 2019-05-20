@@ -143,11 +143,18 @@ public class DejkstraDetection {
                 list.add(bottom);
             for (Cell cell : list) {
                 if (!cell.isVisited()) {
-                    double newDist = actualCell.getDejkstraValue() + cell.getDejkstraValue();
+                    double newDist = actualCell.getDist() + cell.getDejkstraValue();
                     if (newDist < cell.getDist()) {
                         queue.remove(actualCell);
-                        cell.setDejkstraValue((int) newDist);
+                        //  cell.setDejkstraValue((int) newDist);
                         cell.setDist((int) newDist);
+                        queue.add(cell);
+                    }
+                } else {
+                    if (actualCell.getDist() + cell.getDejkstraValue() < cell.getDist()) {
+                        queue.remove(actualCell);
+                        //  cell.setDejkstraValue((int) newDist);
+                        cell.setDist((int) actualCell.getDist() + cell.getDejkstraValue());
                         queue.add(cell);
                     }
                 }
@@ -157,17 +164,22 @@ public class DejkstraDetection {
 
     }
 
+    public void clear() {
+        waysShortest.clear();
+    }
+
     public void setupDejkstra() throws CloneNotSupportedException {
         if (ways != null)
             ways.clear();
         for (int i = 0; i < matrix.getN(); i++) {
             setDejkstraValueToCell();
             matrix.getCellValue(i, 0).setDejkstraValue(0);
+            matrix.getCellValue(i, 0).setDist(0);
             processDejkstra(matrix.getCellValue(i, 0));
             findWay();
         }
         findShortestWay();
-        //   calculateWidthWay();
+        calculateWidthWay();
     }
 
     private void calculateWidthWay() {
@@ -216,8 +228,8 @@ public class DejkstraDetection {
         way.setMatrix(matrix);
         int min = Integer.MAX_VALUE / 2;
         for (int i = 0; i < matrix.getN(); i++) {
-            if (min > matrix.getCellValue(i, matrix.getN() - 1).getDejkstraValue()) {
-                min = matrix.getCellValue(i, matrix.getN() - 1).getDejkstraValue();
+            if (min > matrix.getCellValue(i, matrix.getN() - 1).getDist()) {
+                min = matrix.getCellValue(i, matrix.getN() - 1).getDist();
                 cell = matrix.getCellValue(i, matrix.getN() - 1);
             }
         }
@@ -227,22 +239,25 @@ public class DejkstraDetection {
             Cell left = this.matrix.getCellValue(cell.getX() - 1, cell.getY());
             Cell right = this.matrix.getCellValue(cell.getX() + 1, cell.getY());
             Cell top = this.matrix.getCellValue(cell.getX(), cell.getY() - 1);
-            if (left != null && left.getDejkstraValue() < min) {
-                min = left.getDejkstraValue();
+            if (left != null && left.getDist() < min) {
+                min = left.getDist();
                 cell = left;
             }
-            if (right != null && right.getDejkstraValue() < min) {
-                min = right.getDejkstraValue();
+            if (right != null && right.getDist() < min) {
+                min = right.getDist();
                 cell = right;
             }
-            if (top != null && top.getDejkstraValue() < min) {
-                min = top.getDejkstraValue();
+            if (top != null && top.getDist() < min) {
+                min = top.getDist();
                 cell = top;
             }
             way.addCell(cell);
 
         }
 
+        if(way.getWayArray().get(way.getWayArray().size()-1).getCluster() == null){
+            way.setLengthWay(way.getLengthWay()+way.getMatrix().getN()*way.getMatrix().getN()+1);
+        }
         ways.add(way);
 
         sizeHole(way);
