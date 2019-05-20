@@ -73,6 +73,7 @@ public class Controller {
     ImageView imageView = new ImageView();
     int x1, y1;
     Way put = null;
+    private static final int siz = 600;
 
 
     @FXML
@@ -160,9 +161,8 @@ public class Controller {
     }
 
     private Image createColorScaleImage(Matrix matr, int width, int height, int mnozh, boolean bway) throws CloneNotSupportedException {
-        WritableImage image = new WritableImage(width * mnozh, height * mnozh);
+        WritableImage image = new WritableImage(siz, siz);
         PixelWriter pixelWriter = image.getPixelWriter();
-        int g = matr.getAllClusters().size();
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 x1 = x * mnozh;
@@ -239,7 +239,7 @@ public class Controller {
         Pvalue.setText("Вероятность: " + String.format("%.3f", matr.getP()));
         primaryStage.getChildren().remove(imgcon);
         imgcon.getChildren().remove(imageView);
-        Image colorScale = createColorScaleImage(matr, matr.getN(), matr.getN(), 11, bway);
+        Image colorScale = createColorScaleImage(matr, matr.getN(), matr.getN(), siz/matr.getN(), bway);
         imageView.setImage(colorScale);
         imgcon.getChildren().addAll(imageView);
     }

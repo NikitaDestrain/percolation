@@ -9,7 +9,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<AnchorPane fx:id="primaryStage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.percolation.gui.controller.Controller">
+<AnchorPane fx:id="primaryStage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="852.0" prefWidth="1022.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.percolation.gui.controller.Controller">
    <children>
       <Button fx:id="play" layoutX="281.0" mnemonicParsing="false" onMouseClicked="#GenerateRun" prefWidth="154.0" text="PLAY" />
       <Button fx:id="stop" layoutX="435.0" mnemonicParsing="false" prefWidth="163.0" text="CLEAR" />
@@ -21,13 +21,13 @@
       <Button fx:id="verpol" layoutY="315.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Вертикальные полосы" />
       <Button fx:id="rain" layoutY="346.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Дождь" />
       <Button fx:id="htest" layoutY="377.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="190.0" text="Н тест" />
-      <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="190.0" layoutY="193.0" prefHeight="583.0" prefWidth="190.0">
+      <ScrollPane fx:id="scroll" hbarPolicy="NEVER" layoutX="190.0" layoutY="193.0" prefHeight="642.0" prefWidth="190.0">
         <content>
         </content>
       </ScrollPane>
-      <ScrollPane fx:id="scrimg" layoutX="380.0" layoutY="193.0" prefHeight="583.0" prefWidth="565.0">
+      <ScrollPane fx:id="scrimg" layoutX="380.0" layoutY="193.0" prefHeight="642.0" prefWidth="620.0">
          <content>
-            <StackPane fx:id="imgcon" prefHeight="581.0" prefWidth="562.0" />
+            <StackPane fx:id="imgcon" prefHeight="636.0" prefWidth="615.0" />
          </content>
       </ScrollPane>
       <Label fx:id="perc" layoutX="581.0" layoutY="171.0" text="Перколяция:" />
