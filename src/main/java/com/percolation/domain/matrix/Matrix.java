@@ -27,7 +27,7 @@ public class Matrix implements Cloneable {
         this.generatorType = generatorType;
         this.blackCellCount = 0;
         this.containPercolation = false;
-        this.values = new Cell[N][N];
+        this.values = new Cell[N + 2][N + 2];
         this.clusters = new ArrayList<>();
     }
 
@@ -40,10 +40,10 @@ public class Matrix implements Cloneable {
         Cell cell = new Cell();
         cell.setX(x);
         cell.setY(y);
-        values[y][x] = cell;
-        values[y][x].setValue(value);
+        values[y + 1][x + 1] = cell;
+        values[y + 1][x + 1].setValue(value);
         // calculate cluster
-        values[y][x].setCluster(ClusterDetection.getInstance().calculateCluster(this, x, y));
+        values[y + 1][x + 1].setCluster(ClusterDetection.getInstance().calculateCluster(this, x, y));
     }
 
     public Cell getCellValue(int x, int y) {
@@ -51,11 +51,11 @@ public class Matrix implements Cloneable {
             return null;
         if (x == this.N || y == this.N)
             return null;
-        return values[y][x];
+        return values[y + 1][x + 1];
     }
 
     public Cell[] getLine(int y) {
-        return values[y];
+        return values[y + 1];
     }
 
     @SuppressWarnings("Duplicates")
@@ -69,8 +69,8 @@ public class Matrix implements Cloneable {
                 "\nPercolation: " + containPercolation
         );
         sb.append("\n");
-        for (int y = 0; y < N; y++) {
-            for (int x = 0; x < N; x++) {
+        for (int y = 1; y < N + 1; y++) {
+            for (int x = 1; x < N + 1; x++) {
                 sb.append(values[y][x].getHumanReadableValue());
                 sb.append(" ");
             }
@@ -90,8 +90,8 @@ public class Matrix implements Cloneable {
                 "\nPercolation: " + containPercolation
         );
         sb.append("\n");
-        for (int y = 0; y < N; y++) {
-            for (int x = 0; x < N; x++) {
+        for (int y = 1; y < N + 1; y++) {
+            for (int x = 1; x < N + 1; x++) {
                 sb.append(values[y][x].getClusterId());
                 sb.append(" ");
             }
@@ -133,7 +133,6 @@ public class Matrix implements Cloneable {
     }
 
     public Matrix clone() throws CloneNotSupportedException {
-
         return (Matrix) super.clone();
     }
 }

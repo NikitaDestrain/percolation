@@ -28,10 +28,10 @@ public class PercolationDetection {
         Cell[] firstLine = matrix.getLine(0);
         Cell[] lastLine = matrix.getLine(size - 1);
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 1; i < size + 1; i++) {
             Cluster cont = firstLine[i].getCluster();
             if (cont != null) {
-                for (int j = 0; j < size; j++) {
+                for (int j = 1; j < size + 1; j++) {
                     if (lastLine[j].getCluster() == cont) {
                         res.add(cont);
                         //System.out.println("[PERCOLATION DETECTED]: Matrix id = " + matrix.getId() + "; Cluster id = " + cont.getId());

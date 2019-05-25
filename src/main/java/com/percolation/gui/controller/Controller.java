@@ -35,6 +35,7 @@ import java.util.*;
  * Создает окно основного меню, описывает все методы для кнопок и вызова основных методов для построения
  * тестовых матриц, генерации матриц по заданию и прокладки пути. Описывает методы вызова дополнительных окон для
  * введения данных для генерации и выбора экспорта различных видов статистики
+ *
  * @author Kirill Galanov
  */
 public class Controller {
@@ -239,7 +240,7 @@ public class Controller {
         Pvalue.setText("Вероятность: " + String.format("%.3f", matr.getP()));
         primaryStage.getChildren().remove(imgcon);
         imgcon.getChildren().remove(imageView);
-        Image colorScale = createColorScaleImage(matr, matr.getN(), matr.getN(), siz/matr.getN(), bway);
+        Image colorScale = createColorScaleImage(matr, matr.getN(), matr.getN(), siz / matr.getN(), bway);
         imageView.setImage(colorScale);
         imgcon.getChildren().addAll(imageView);
     }

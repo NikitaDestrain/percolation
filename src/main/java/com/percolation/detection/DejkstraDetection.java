@@ -14,10 +14,6 @@ import java.util.PriorityQueue;
  */
 public class DejkstraDetection {
     private static DejkstraDetection instance;
-    private String LEFT_SIDE = "LEFTSIDE";
-    private String RIGHT_SIDE = "RIGHTSIDE";
-    private String TOP_SIDE = "TOPSIDE";
-    private String BOTTOM_SIDE = "BOTTOMSIDE";
 
     private Matrix matrix;
     int counter = 0;
@@ -44,10 +40,11 @@ public class DejkstraDetection {
     }
 
     public void setDejkstraValueToCell() {
-        for (Cell[] cell : this.matrix.getValues()
-        ) {
-            for (Cell cel : cell
-            ) {
+        // WA with for loops, cuz we have additional lines and columns for correct statistic
+        for (int y = 1; y < matrix.getN(); y++) {
+            Cell[] cell = matrix.getLine(y);
+            for (int i = 1; i < cell.length - 1; i++) {
+                Cell cel = cell[i];
                 if (cel.getCluster() != null)
                     cel.setDejkstraValue(1);
                 else
@@ -255,8 +252,8 @@ public class DejkstraDetection {
 
         }
 
-        if(way.getWayArray().get(way.getWayArray().size()-1).getCluster() == null){
-            way.setLengthWay(way.getLengthWay()+way.getMatrix().getN()*way.getMatrix().getN()+1);
+        if (way.getWayArray().get(way.getWayArray().size() - 1).getCluster() == null) {
+            way.setLengthWay(way.getLengthWay() + way.getMatrix().getN() * way.getMatrix().getN() + 1);
         }
         ways.add(way);
 

@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Создает окно выбора экспорта различных видов статистики, описывает методы вызова основных методов
  * экспорта статистики в файл, описывает методы для выбора экспорта статистики
+ *
  * @author Kirill Galanov
  */
 public class ControllerFile {
@@ -39,7 +40,7 @@ public class ControllerFile {
                 }
                 if (SWM.isSelected() == true) {
                     try {
-                        MatrixService.getInstance().writeMatrixWayStatisticToFile(matr.get(0).getN(),matr);
+                        MatrixService.getInstance().writeMatrixWayStatisticToFile(matr.get(0).getN(), matr);
                     } catch (CloneNotSupportedException e) {
                         e.printStackTrace();
                     }

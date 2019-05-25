@@ -5,6 +5,7 @@ import com.percolation.domain.matrix.Matrix;
 import lombok.Data;
 
 import java.util.ArrayList;
+
 /**
  * @author Dmitryi Vasilev
  */
@@ -36,6 +37,6 @@ public class Way implements Cloneable {
 
     @Override
     public Way clone() throws CloneNotSupportedException {
-        return (Way)super.clone();
+        return (Way) super.clone();
     }
 }
