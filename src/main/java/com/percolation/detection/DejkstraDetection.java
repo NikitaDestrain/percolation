@@ -182,8 +182,7 @@ public class DejkstraDetection {
     private void calculateWidthWay() {
         int min = Integer.MAX_VALUE / 2;
         int max = 0;
-        for (int i = 0; i < waysShortest.size(); i++) {
-            for (Cell cell : waysShortest.get(i).getWayArray()
+            for (Cell cell : this.shortestWay.getWayArray()
             ) {
 
                 if (cell.getX() > max)
@@ -192,8 +191,8 @@ public class DejkstraDetection {
                     min = cell.getX();
 
             }
-            waysShortest.get(i).setWidthWay(max - min);
-        }
+            this.shortestWay.setWidthWay(max - min);
+
     }
 
     private void findShortestWay() {
@@ -211,6 +210,7 @@ public class DejkstraDetection {
                 way.setRedCell(way.getRedCell() + 1);
         }
         way.setSizeWay(way.getWayArray().size());
+        sizeHole(way);
         waysShortest.add(way);
     }
 
@@ -257,8 +257,6 @@ public class DejkstraDetection {
             way.setLengthWay(way.getLengthWay() + way.getMatrix().getN() * way.getMatrix().getN() + 1);
         }
         ways.add(way);
-
-        sizeHole(way);
     }
 
 
@@ -273,7 +271,7 @@ public class DejkstraDetection {
             if (count > max)
                 max = count;
         }
-        way.setSizeHole(max - 1);
+        way.setSizeHole(max);
     }
 
     public WayLighningStatistic getWayStatistics() {
