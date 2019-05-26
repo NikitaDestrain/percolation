@@ -199,8 +199,6 @@ public class IOUtils {
             fileWriter.append(String.valueOf(clusterStatistic.getAverageAmountClusters()));
             fileWriter.append(COMMA_DELIMITER);
             fileWriter.append(String.valueOf(clusterStatistic.getAverageSizeCluster()));
-            //fileWriter.append(COMMA_DELIMITER);
-            //fileWriter.append(String.valueOf(clusterStatistic.getAverageDistanceBetweenClusters()));
             fileWriter.append(LINE_SEPARATOR);
             System.out.println("Write to CSV file Succeeded! See result: " + OUT_FOLDER + fileName);
         } catch (Exception e) {

@@ -9,5 +9,4 @@ import lombok.Data;
 public class ClusterStatistic {
     private double averageAmountClusters;
     private double averageSizeCluster;
-    private double averageDistanceBetweenClusters;
 }
