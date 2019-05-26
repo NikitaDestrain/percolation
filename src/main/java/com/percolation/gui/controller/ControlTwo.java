@@ -166,6 +166,9 @@ public class ControlTwo {
                         Tint = Integer.parseInt(MatT.getText());
                         Pint = Float.parseFloat(MatP.getText());
                     }
+                    if (Nint <= 0 || Tint <= 0 || Pint < 0 || Pint > 1) {
+                        throw new Exception();
+                    }
                     if (Zapol.getValue() == "Детерминированное распределение")
                         Controller.getInstance().setMatr(MatrixService.getInstance().createMatrices(Tint, Nint, Pint, MatrixGeneratorType.UNIFORM));
                     if (Zapol.getValue() == "Градиент")
@@ -174,9 +177,6 @@ public class ControlTwo {
                         Controller.getInstance().setMatr(MatrixService.getInstance().createMatrices(Tint, Nint, Pint, MatrixGeneratorType.MOSTOVOY_GRADIENT));
                     if (Zapol.getValue() == "Равномерное распределение")
                         Controller.getInstance().setMatr(MatrixService.getInstance().createMatrices(Tint, Nint, Pint, MatrixGeneratorType.UNIFORM_DISTRIBUTION));
-                    if (Nint <= 0 || Tint <= 0 || Pint < 0 || Pint > 1) {
-                        throw new Exception();
-                    }
                 } catch (NumberFormatException ex) {
                     Param.getChildren().remove(exep);
                     exep.setText("Неверный формат чисел, введите числа формата для int N, для float х.х");
