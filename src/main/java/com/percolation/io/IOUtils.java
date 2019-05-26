@@ -31,7 +31,7 @@ public class IOUtils {
     //private static final String CSV_CLUSTER_STATISTIC_HEADER = "averageAmountClusters,averageSizeCluster,averageDistanceBetweenClusters";
     private static final String CSV_CLUSTER_STATISTIC_HEADER = "averageAmountClusters,averageSizeCluster";
     private static final String CSV_BLACK_HOLE_LIGHTNING_STATISTIC_HEADER = "averageAmountBlackHole,concentrationBlackHole";
-    private static final String CSV_WAY_LIGHTNING_STATISTIC_HEADER = "id,p,n,lengthWay,redCell,sizeHole,averageLength";
+    private static final String CSV_WAY_LIGHTNING_STATISTIC_HEADER = "id,p,n,lengthWay,redCell,sizeHole,averageLength, widthWay, sizeWay";
     private static final String FILENAME = "wayLightningStatistics";
 
     // test constants
@@ -176,6 +176,10 @@ public class IOUtils {
                 fileWriter.append(String.valueOf(way.getSizeHole()));
                 fileWriter.append(COMMA_DELIMITER);
                 fileWriter.append(String.valueOf(wayLighningStatistic.getAverageWay()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(way.getWidthWay()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(way.getSizeWay()));
                 fileWriter.append(LINE_SEPARATOR);
             }
             System.out.println("Write to CSV file succeeded! See result: " + OUT_FOLDER + fileName);

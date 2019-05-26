@@ -25,6 +25,8 @@ public class Way implements Cloneable {
 
     private double widthWay;
 
+    private int sizeWay;
+
     public void init() {
         wayArray = new ArrayList<>();
         redCell = 0;

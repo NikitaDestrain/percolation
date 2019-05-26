@@ -210,6 +210,7 @@ public class DejkstraDetection {
             if (cell.getCluster() == null)
                 way.setRedCell(way.getRedCell() + 1);
         }
+        way.setSizeWay(way.getWayArray().size());
         waysShortest.add(way);
     }
 
